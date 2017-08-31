@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
-const {exec, spawn} = require('child-process-promise');
+const {exec, spawn} = require('child-process-promise'); // eslint-disable-line no-unused-vars
 const eslint = require('gulp-eslint');
 
 const printOutput = (tag, output) => {
@@ -23,7 +23,7 @@ const printOutput = (tag, output) => {
   }
 };
 
-const executeAsyncProcess = (args) => {
+const executeAsyncProcess = (args) => { // eslint-disable-line no-unused-vars
   let isStderrOutputPresent = false;
 
   return Promise.resolve().then(() => {

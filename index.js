@@ -14,12 +14,12 @@ program
 process.on('unhandledRejection', (err) => {
   if (process.env.NODE_ENV === 'development') {
     logger.error(err.stack);
-    process.exit(1)
+    process.exit(1);
   }
 
   logger.error(err);
-  process.exit(1)
-})
+  process.exit(1);
+});
 
 let configFileName = program.config;
 if (!configFileName) {
@@ -36,7 +36,7 @@ const main = async () => {
 
   const browser = await puppeteer.launch({
     args: parsedConfig['chromium_headless_args'],
-    dumpio: false,  // useful for debugging
+    dumpio: false, // useful for debugging
   });
 
   let transactions = [];
