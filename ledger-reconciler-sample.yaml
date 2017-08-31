@@ -1,0 +1,11 @@
+---
+ledger_cli: 'ledger'
+chromium_headless_args:
+  - '--no-sandbox'
+
+plugins:
+  - name: 'Chase Canada'
+    location: './lib/plugins/chaseCanada'
+    username: '<chase banking username>'
+    password: '<chase banking password>'
+    securityAnswer: '<chase banking security answer>'
