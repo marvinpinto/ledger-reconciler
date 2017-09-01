@@ -21,7 +21,8 @@
     "ledger-reconciler": "./index.js"
   },
   "scripts": {
-    "lint": "gulp lint-javascript"
+    "lint": "gulp lint-javascript",
+    "test": "jest --no-watchman --coverage"
   },
   "eslintConfig": {
     "extends": [
@@ -72,6 +73,21 @@
       "Headers": true
     }
   },
+  "babel": {
+    "plugins": ["transform-object-rest-spread"]
+  },
+  "jest": {
+    "testRegex": "/tests/.*-(test|spec)\\.js$",
+    "collectCoverageFrom": [
+      "index.js",
+      "lib/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 100
+      }
+    }
+  },
   "dependencies": {
     "chalk": "^2.1.0",
     "commander": "^2.11.0",
@@ -83,11 +99,13 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "child-process-promise": "^2.2.1",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-jest": "^20.0.3",
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.0",
-    "gulp-util": "^3.0.8"
+    "gulp-util": "^3.0.8",
+    "jest": "^20.0.4"
   }
 }

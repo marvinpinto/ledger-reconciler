@@ -64,6 +64,7 @@ gulp.task('lint-javascript', () => {
     'gulpfile.js',
     'index.js',
     'lib/**/*.js',
+    'tests/**/*.js',
   ];
   return gulp.src(files)
     .pipe(eslint())
