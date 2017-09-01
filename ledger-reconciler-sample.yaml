@@ -1,7 +1,9 @@
 ---
-ledger_cli: 'ledger'
-chromium_headless_args:
+ledgerCli: 'ledger'
+reckonCli: 'reckon'
+chromiumHeadlessArgs:
   - '--no-sandbox'
+ledgerDataFile: '/absolute/path/to/your/ledger.dat'
 
 plugins:
   - name: 'Chase Canada'
