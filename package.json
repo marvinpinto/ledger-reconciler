@@ -86,7 +86,12 @@
       "global": {
         "lines": 100
       }
-    }
+    },
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/index.js",
+      "<rootDir>/lib/logger.js",
+      "<rootDir>/lib/plugins"
+    ]
   },
   "dependencies": {
     "chalk": "^2.1.0",
