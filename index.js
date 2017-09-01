@@ -10,6 +10,7 @@ const toLedger = require('./lib/toLedger');
 const temp = require('temp').track();
 const fs = require('fs-extra');
 const writeYaml = util.promisify(require('write-yaml'));
+const collateLedgerData = require('./lib/collateLedgerData');
 
 program
   .version('0.0.1')
@@ -79,7 +80,15 @@ const main = async () => {
     await fs.appendFile(tempLedgerFile.path, ledgerOutput);
   }
 
+  // Close the chromium browser instance as we no longer require it
   await browser.close();
+
+  const collatedLedgerOutput = await collateLedgerData({
+    tempLedgerFileName: tempLedgerFile.path,
+    ledgerCli: parsedConfig.ledgerCli,
+  });
+
+  logger.debug(collatedLedgerOutput);
 };
 
 main();
