@@ -9,3 +9,19 @@ plugins:
     username: '<chase banking username>'
     password: '<chase banking password>'
     securityAnswer: '<chase banking security answer>'
+    ledgerAccountName: 'Liabilities:Chase-Example-Visa'
+    ledgerCurrency: 'CAD '
+
+reckonTokens:
+  Expenses:
+    Computing:
+      Cloud Services:
+        - /amazon web services/i
+  Income:
+    Credit Card Rewards:
+      - /rewards auto-redemption/i
+    Interest:
+      - /interest paid/i
+  Liabilities:
+    Chase-Example-Visa:
+      - /Bill Payment - REWARDS/i

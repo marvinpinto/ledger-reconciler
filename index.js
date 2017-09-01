@@ -5,6 +5,12 @@ const program = require('commander');
 const logger = require('./lib/logger');
 const readYaml = util.promisify(require('read-yaml'));
 const puppeteer = require('puppeteer');
+const toCSV = require('./lib/toCSV');
+const toLedger = require('./lib/toLedger');
+const temp = require('temp').track();
+const fs = require('fs');
+const writeAsync = util.promisify(fs.write);
+const writeYaml = util.promisify(require('write-yaml'));
 
 program
   .version('0.0.1')
@@ -39,7 +45,12 @@ const main = async () => {
     dumpio: false, // useful for debugging
   });
 
-  let transactions = [];
+  // Write out the reckon token data to a temp file
+  const tempYamlFile = temp.openSync();
+  await writeYaml(tempYamlFile.path, parsedConfig.reckonTokens);
+
+  let ledgerOutput = [];
+
   for (let plugin of parsedConfig.plugins) {
     logger.info(`Now processing plugin: ${plugin.name}`);
     const pluginArgs = {
@@ -47,10 +58,24 @@ const main = async () => {
       browser,
     };
     const reconcilerPlugin = require(plugin.location);
-    const tRows = await reconcilerPlugin.downloadTransactions(pluginArgs);
-    transactions = [...transactions, ...tRows];
+    const pluginTransactions = await reconcilerPlugin.downloadTransactions(pluginArgs);
+
+    // Write out the CSV output from the plugin into a temp file
+    const csvOutput = toCSV(pluginTransactions);
+    const tempFile = temp.openSync();
+    await writeAsync(tempFile.fd, csvOutput);
+
+    // Collate the ledger output for later
+    ledgerOutput.push(await toLedger({
+      ledgerAccountName: plugin.ledgerAccountName,
+      ledgerCurrency: plugin.ledgerCurrency,
+      reckonCli: parsedConfig.reckonCli,
+      csvInputFileName: tempFile.path,
+      reckonTokensTempFileName: tempYamlFile.path,
+    }));
   }
 
+  logger.info(ledgerOutput[0]);
   await browser.close();
 };
 
