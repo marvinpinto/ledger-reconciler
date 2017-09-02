@@ -2,7 +2,7 @@
 
 const util = require('util');
 const program = require('commander');
-const logger = require('./lib/logger');
+const Logger = require('./lib/Logger');
 const readYaml = util.promisify(require('read-yaml'));
 const puppeteer = require('puppeteer');
 const toCSV = require('./lib/toCSV');
@@ -15,10 +15,12 @@ const collateLedgerData = require('./lib/collateLedgerData');
 program
   .version('0.0.1')
   .option('-c, --config <config file>', 'Ledger Reconciler config file')
+  .option('--silent', 'Suppress all output except warnings & errors')
+  .option('--debug', 'Print out debug output')
   .parse(process.argv);
 
 process.on('unhandledRejection', (err) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (program.debug) {
     logger.error(err.stack);
     process.exit(1);
   }
@@ -26,6 +28,9 @@ process.on('unhandledRejection', (err) => {
   logger.error(err);
   process.exit(1);
 });
+
+// Initiate the logger instance
+const logger = new Logger(program.silent, program.debug);
 
 let configFileName = program.config;
 if (!configFileName) {
@@ -56,8 +61,8 @@ const main = async () => {
   for (let plugin of parsedConfig.plugins) {
     logger.info(`Now processing plugin: ${plugin.name}`);
     const ReconcilerPlugin = require(plugin.location);
-    const inst = new ReconcilerPlugin(browser);
-    const pluginTransactions = await inst.scrapeTransactions(plugin);
+    const inst = new ReconcilerPlugin(browser, logger);
+    const pluginTransactions = await inst.scrapeTransactions({...plugin});
 
     // Write out the CSV output from the plugin into a temp file
     const csvOutput = toCSV(pluginTransactions);
@@ -71,6 +76,7 @@ const main = async () => {
       reckonCli: parsedConfig.reckonCli,
       csvInputFileName: tempFile.path,
       reckonTokensTempFileName: tempYamlFile.path,
+      logger,
     });
 
     // Append the ledger output from this plugin onto the temporary ledger file
@@ -83,6 +89,7 @@ const main = async () => {
   const collatedLedgerOutput = await collateLedgerData({
     tempLedgerFileName: tempLedgerFile.path,
     ledgerCli: parsedConfig.ledgerCli,
+    logger,
   });
 
   logger.debug(collatedLedgerOutput);

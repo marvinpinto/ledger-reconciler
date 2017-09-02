@@ -18,12 +18,20 @@ jest.mock('util', () => ({
 }));
 
 describe('collateLedgerData function', () => {
+  const logger = {
+    debug: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  };
+
   it('throws an error if the temp ledger file is not specified', async () => {
     expect.assertions(1);
 
     const inputArgs = {
       tempLedgerFileName: null,
       ledgerCli: '/usr/local/bin/ledger',
+      logger,
     };
 
     await expect(collateLedgerData(inputArgs)).rejects.toEqual(Error('Missing temporary ledger file name - this is very likely a bug'));
@@ -35,6 +43,7 @@ describe('collateLedgerData function', () => {
     const inputArgs = {
       tempLedgerFileName: '/tmp/fake-ledger.dat',
       ledgerCli: null,
+      logger,
     };
 
     await expect(collateLedgerData(inputArgs)).rejects.toEqual(Error('You do not appear to have the "ledgerCli" key set in your config file.'));
@@ -46,6 +55,7 @@ describe('collateLedgerData function', () => {
     const inputArgs = {
       tempLedgerFileName: '/tmp/fake-ledger.dat',
       ledgerCli: '/usr/local/bin/ledger',
+      logger,
     };
 
     await expect(collateLedgerData(inputArgs)).resolves.toEqual('fake stdout output');

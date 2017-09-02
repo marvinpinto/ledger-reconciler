@@ -89,7 +89,6 @@
     },
     "coveragePathIgnorePatterns": [
       "<rootDir>/index.js",
-      "<rootDir>/lib/logger.js",
       "<rootDir>/lib/plugins"
     ]
   },

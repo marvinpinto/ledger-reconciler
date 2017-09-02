@@ -23,6 +23,13 @@ jest.mock('util', () => ({
 }));
 
 describe('toLedger function', () => {
+  const logger = {
+    debug: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  };
+
   it('throws an error if the ledger account name or currency are not specified', async () => {
     expect.assertions(1);
 
@@ -32,6 +39,7 @@ describe('toLedger function', () => {
       reckonCli: '/usr/local/bin/reckon',
       csvInputFileName: '/tmp/fake-csv-input-file',
       reckonTokensTempFileName: '/tmp/fake-reckon-tokens-file',
+      logger,
     };
 
     await expect(toLedger(inputArgs)).rejects.toEqual(Error('The config for one of your plugins is missing either the "ledgerAccountName" or the "ledgerCurrency" keys.'));
@@ -46,6 +54,7 @@ describe('toLedger function', () => {
       reckonCli: '',
       csvInputFileName: '/tmp/fake-csv-input-file',
       reckonTokensTempFileName: '/tmp/fake-reckon-tokens-file',
+      logger,
     };
 
     await expect(toLedger(inputArgs)).rejects.toEqual(Error('You do not appear to have the "reckonCli" key set in your config file.'));
@@ -60,6 +69,7 @@ describe('toLedger function', () => {
       reckonCli: '/usr/local/bin/reckon',
       csvInputFileName: '',
       reckonTokensTempFileName: '/tmp/fake-reckon-tokens-file',
+      logger,
     };
 
     await expect(toLedger(inputArgs)).rejects.toEqual(Error('Missing required temporary files - this is very likely a bug'));
@@ -74,6 +84,7 @@ describe('toLedger function', () => {
       reckonCli: '/usr/local/bin/reckon',
       csvInputFileName: '/tmp/fake-csv-input-file',
       reckonTokensTempFileName: '/tmp/fake-reckon-tokens-file',
+      logger,
     };
 
     await expect(toLedger(inputArgs)).resolves.toEqual('fake stdout output');
