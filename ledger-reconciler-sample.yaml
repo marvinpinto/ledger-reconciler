@@ -7,7 +7,7 @@ ledgerDataFile: '/absolute/path/to/your/ledger.dat'
 
 plugins:
   - name: 'Chase Canada'
-    location: './lib/plugins/chaseCanada'
+    location: './lib/plugins/ChaseCanadaPlugin'
     username: '<chase banking username>'
     password: '<chase banking password>'
     securityAnswer: '<chase banking security answer>'

@@ -55,12 +55,9 @@ const main = async () => {
 
   for (let plugin of parsedConfig.plugins) {
     logger.info(`Now processing plugin: ${plugin.name}`);
-    const pluginArgs = {
-      ...plugin,
-      browser,
-    };
-    const reconcilerPlugin = require(plugin.location);
-    const pluginTransactions = await reconcilerPlugin.downloadTransactions(pluginArgs);
+    const ReconcilerPlugin = require(plugin.location);
+    const inst = new ReconcilerPlugin(browser);
+    const pluginTransactions = await inst.scrapeTransactions(plugin);
 
     // Write out the CSV output from the plugin into a temp file
     const csvOutput = toCSV(pluginTransactions);
