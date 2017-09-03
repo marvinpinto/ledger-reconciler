@@ -87,6 +87,6 @@ describe('toLedger function', () => {
       logger,
     };
 
-    await expect(toLedger(inputArgs)).resolves.toEqual('fake stdout output');
+    await expect(toLedger(inputArgs)).resolves.toEqual('fake stdout output\r\n');
   });
 });

@@ -38,7 +38,7 @@ if (!configFileName) {
 }
 
 const main = async () => {
-  const parsedConfig = await readYaml(configFileName);
+  let parsedConfig = await readYaml(configFileName);
 
   if (!parsedConfig.plugins || !parsedConfig.plugins.length) {
     logger.warn(`You do not appear to have any plugins listed in your ${configFileName} config file`);
@@ -58,11 +58,13 @@ const main = async () => {
   const tempLedgerFile = temp.openSync();
   await fs.copy(parsedConfig.ledgerDataFile, tempLedgerFile.path);
 
-  for (let plugin of parsedConfig.plugins) {
+  for (let i = 0; i < parsedConfig.plugins.length; i++) {
+    const plugin = parsedConfig.plugins[i];
+
     logger.info(`Now processing plugin: ${plugin.name}`);
     const ReconcilerPlugin = require(plugin.location);
-    const inst = new ReconcilerPlugin(browser, logger);
-    const pluginTransactions = await inst.scrapeTransactions({...plugin});
+    const inst = new ReconcilerPlugin(browser, logger, {...plugin});
+    const pluginTransactions = await inst.scrapeTransactions();
 
     // Write out the CSV output from the plugin into a temp file
     const csvOutput = toCSV(pluginTransactions);
@@ -81,6 +83,9 @@ const main = async () => {
 
     // Append the ledger output from this plugin onto the temporary ledger file
     await fs.appendFile(tempLedgerFile.path, ledgerOutput);
+
+    // Update the most recent transaction date for this plugin
+    parsedConfig.plugins[i].mostRecentTransactionDate = inst.getMostRecentTransactionDate();
   }
 
   // Close the chromium browser instance as we no longer require it
@@ -93,6 +98,7 @@ const main = async () => {
   });
 
   logger.debug(collatedLedgerOutput);
+  console.log(JSON.stringify(parsedConfig));
 };
 
 main();
