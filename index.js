@@ -69,19 +69,23 @@ const main = async () => {
     const pluginTransactions = await inst.scrapeTransactions();
 
     // Write out the CSV output from the plugin into a temp file
+    logger.debug(`Raw transaction list: ${JSON.stringify(pluginTransactions)}`);
     const csvOutput = toCSV(pluginTransactions);
     const tempFile = temp.openSync();
     await fs.write(tempFile.fd, csvOutput);
 
     // Collate the ledger output for later
-    const ledgerOutput = await toLedger({
-      ledgerAccountName: plugin.ledgerAccountName,
-      ledgerCurrency: plugin.ledgerCurrency,
-      reckonCli: parsedConfig.reckonCli,
-      csvInputFileName: tempFile.path,
-      reckonTokensTempFileName: tempYamlFile.path,
-      logger,
-    });
+    let ledgerOutput = '';
+    if (pluginTransactions.length) {
+      ledgerOutput = await toLedger({
+        ledgerAccountName: plugin.ledgerAccountName,
+        ledgerCurrency: plugin.ledgerCurrency,
+        reckonCli: parsedConfig.reckonCli,
+        csvInputFileName: tempFile.path,
+        reckonTokensTempFileName: tempYamlFile.path,
+        logger,
+      });
+    }
 
     // Append the ledger output from this plugin onto the temporary ledger file
     await fs.appendFile(tempLedgerFile.path, ledgerOutput);
