@@ -11,12 +11,14 @@ const temp = require('temp').track();
 const fs = require('fs-extra');
 const writeYaml = util.promisify(require('write-yaml'));
 const collateLedgerData = require('./lib/collateLedgerData');
+const jsYaml = require('js-yaml');
 
 program
   .version('0.0.1')
   .option('-c, --config <config file>', 'Ledger Reconciler config file')
   .option('--silent', 'Suppress all output except warnings & errors')
   .option('--debug', 'Print out debug output')
+  .option('--dry-run', 'Perform a dry run - scrape transactions for all plugins but do not update anything')
   .parse(process.argv);
 
 process.on('unhandledRejection', (err) => {
@@ -97,8 +99,15 @@ const main = async () => {
     logger,
   });
 
-  logger.debug(collatedLedgerOutput);
-  console.log(JSON.stringify(parsedConfig));
+  if (program.dryRun) {
+    logger.info(`Will replace ledger file "${parsedConfig.ledgerDataFile}" with:\r\n${collatedLedgerOutput}`);
+    logger.info(`Will replace config file "${configFileName}" with:\r\n${jsYaml.safeDump(parsedConfig)}`);
+    return Promise.resolve();
+  }
+
+  // Write out the update config & ledger data files
+  await writeYaml(configFileName, parsedConfig);
+  await fs.outputFile(parsedConfig.ledgerDataFile, collatedLedgerOutput);
 };
 
 main();

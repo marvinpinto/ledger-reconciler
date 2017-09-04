@@ -3,7 +3,7 @@ const toLedger = require('../lib/toLedger');
 jest.mock('util', () => ({
   promisify: () => ((filename, args) => {
     expect(filename).toEqual('/usr/local/bin/reckon');
-    expect(args.length).toEqual(10);
+    expect(args.length).toEqual(12);
     expect(args[0]).toEqual('--file');
     expect(args[1]).toEqual('/tmp/fake-csv-input-file');
     expect(args[2]).toEqual('--currency');
@@ -14,6 +14,8 @@ jest.mock('util', () => ({
     expect(args[7]).toEqual('--unattended');
     expect(args[8]).toEqual('--account-tokens');
     expect(args[9]).toEqual('/tmp/fake-reckon-tokens-file');
+    expect(args[10]).toEqual('--date-format');
+    expect(args[11]).toEqual('%m/%d/%Y');
 
     return Promise.resolve({
       stdout: 'I didn\'t find a high-likelyhood money column, but I\'m taking my best guess with column 2.\r\n fake stdout output',
@@ -76,7 +78,7 @@ describe('toLedger function', () => {
   });
 
   it('calls reckon with the correct arguments', async () => {
-    expect.assertions(13);
+    expect.assertions(15);
 
     const inputArgs = {
       ledgerAccountName: 'Liabilities:Chase-Example-Visa',
