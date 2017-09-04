@@ -88,8 +88,7 @@
       }
     },
     "coveragePathIgnorePatterns": [
-      "<rootDir>/index.js",
-      "<rootDir>/lib/plugins"
+      "<rootDir>/index.js"
     ]
   },
   "dependencies": {
