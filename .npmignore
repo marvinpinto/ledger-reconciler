@@ -1,0 +1,6 @@
+coverage
+gulpfile.js
+tests
+yarn.lock
+*.log
+notes.txt
