@@ -22,7 +22,12 @@
   },
   "scripts": {
     "lint": "gulp lint-javascript",
-    "test": "jest --no-watchman --coverage"
+    "test": "jest --no-watchman --coverage",
+    "cleanup": "rm -rf coverage node_modules && yarn cache clean",
+    "preversion": "[ $(git rev-parse --abbrev-ref HEAD) = 'master' ] && yarn run lint && yarn test",
+    "preversion:indexjs": "sed -i \"s/[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+/$npm_package_version/g\" index.js",
+    "version": "npm run preversion:indexjs && git add index.js",
+    "postversion": "git push && git push --tags && yarn run cleanup"
   },
   "eslintConfig": {
     "extends": [
@@ -74,7 +79,9 @@
     }
   },
   "babel": {
-    "plugins": ["transform-object-rest-spread"]
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
   },
   "jest": {
     "testRegex": "/tests/.*-(test|spec)\\.js$",
