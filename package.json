@@ -1,0 +1,114 @@
+{
+  "name": "ledger-reconciler",
+  "version": "0.0.1",
+  "description": "Automatically download and reconcile your ledger financial entries",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marvinpinto/ledger-reconciler.git"
+  },
+  "homepage": "https://github.com/marvinpinto/ledger-reconciler",
+  "bugs": "https://github.com/marvinpinto/ledger-reconciler/issues",
+  "author": {
+    "name": "Marvin Pinto",
+    "url": "https://disjoint.ca"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.4.0"
+  },
+  "bin": {
+    "ledger-reconciler": "./index.js"
+  },
+  "scripts": {
+    "lint": "gulp lint-javascript",
+    "test": "jest --no-watchman --coverage"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "google",
+      "plugin:jest/recommended"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "rules": {
+      "require-jsdoc": 0,
+      "quote-props": [
+        2,
+        "as-needed"
+      ],
+      "max-len": 0,
+      "no-console": 0
+    },
+    "plugins": [
+      "jest"
+    ],
+    "globals": {
+      "document": true,
+      "describe": true,
+      "beforeEach": true,
+      "afterEach": true,
+      "jest": true,
+      "it": true,
+      "expect": true,
+      "window": true,
+      "Promise": true,
+      "console": true,
+      "process": true,
+      "global": true,
+      "require": true,
+      "exports": true,
+      "module": true,
+      "setTimeout": true,
+      "clearTimeout": true,
+      "localStorage": true,
+      "jasmine": true,
+      "fail": true,
+      "caches": true,
+      "fetch": true,
+      "Response": true,
+      "Headers": true
+    }
+  },
+  "babel": {
+    "plugins": ["transform-object-rest-spread"]
+  },
+  "jest": {
+    "testRegex": "/tests/.*-(test|spec)\\.js$",
+    "collectCoverageFrom": [
+      "index.js",
+      "lib/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 100
+      }
+    },
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/index.js"
+    ]
+  },
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "commander": "^2.11.0",
+    "fs-extra": "^4.0.1",
+    "puppeteer": "^0.10.1",
+    "read-yaml": "^1.1.0",
+    "temp": "^0.8.3",
+    "write-yaml": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "child-process-promise": "^2.2.1",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-jest": "^20.0.3",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-util": "^3.0.8",
+    "jest": "^20.0.4"
+  }
+}
