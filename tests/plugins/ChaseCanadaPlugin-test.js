@@ -126,4 +126,16 @@ describe('ChaseCanadaPlugin', () => {
     chaseCanadaPlugin = new ChaseCanadaPlugin(browser, logger, pluginArgs);
     expect(chaseCanadaPlugin.getMostRecentTransactionDate()).toEqual('yesterday');
   });
+
+  it('returns the default remaining balance', () => {
+    expect.assertions(1);
+    pluginArgs = {
+      mostRecentTransactionDate: 'yesterday',
+      username: 'fake-username',
+      password: 'fake-password',
+      securityAnswer: 'fake-security-answer',
+    };
+    chaseCanadaPlugin = new ChaseCanadaPlugin(browser, logger, pluginArgs);
+    expect(chaseCanadaPlugin.getRemainingBalance()).toEqual('undefined');
+  });
 });

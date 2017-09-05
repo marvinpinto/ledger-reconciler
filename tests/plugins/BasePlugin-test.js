@@ -22,4 +22,13 @@ describe('BasePlugin base class', () => {
       expect(error).toEqual(Error('This should be implemented in the extended class'));
     }
   });
+
+  it('clarifies that the getRemainingBalance function should be implemented in the extending class', () => {
+    expect.assertions(1);
+    try {
+      basePlugin.getRemainingBalance();
+    } catch (error) {
+      expect(error).toEqual(Error('This should be implemented in the extended class'));
+    }
+  });
 });
