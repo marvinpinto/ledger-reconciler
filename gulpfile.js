@@ -2,6 +2,16 @@ const gulp = require('gulp');
 const gutil = require('gulp-util');
 const {exec, spawn} = require('child-process-promise'); // eslint-disable-line no-unused-vars
 const eslint = require('gulp-eslint');
+const source = require('vinyl-source-stream');
+const streamify = require('gulp-streamify');
+const fs = require('fs');
+const request = require('request');
+const decompress = require('gulp-decompress');
+const ip = require('ip');
+
+const hugoVersion = '0.26';
+const hugoBinary = 'tmp/hugo';
+const hugoUrl = `https://github.com/gohugoio/hugo/releases/download/v${hugoVersion}/hugo_${hugoVersion}_Linux-64bit.tar.gz`;
 
 const printOutput = (tag, output) => {
   if (output.stdout) {
@@ -70,4 +80,35 @@ gulp.task('lint-javascript', () => {
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
+});
+
+gulp.task('download-hugo', () => {
+  if (!fs.existsSync(hugoBinary)) {
+    return request(hugoUrl)
+      .pipe(source('hugo.tar.gz'))
+      .pipe(streamify(decompress({strip: 1})))
+      .pipe(gulp.dest('tmp'));
+  }
+  return;
+});
+
+gulp.task('website-dev-server', ['download-hugo'], () => {
+  const tag = 'website-dev-server';
+  return Promise.resolve().then(() => {
+    return executeAsyncProcess({
+      process: hugoBinary,
+      processArguments: [
+        'server',
+        '--baseUrl', `http://${ip.address()}:1313`,
+        '--source', 'website',
+        '--config', 'website/config.yaml',
+        '--bind', ip.address(),
+      ],
+      taskTag: tag,
+      envVars: {},
+    });
+  }).catch((err) => {
+    printOutput(tag, {stdout: '', stderr: err.toString()});
+    throw new Error(`Error in task "${tag}"`);
+  });
 });
