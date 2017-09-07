@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIXME: Title</title>
+  <meta name="description" content="FIXME: THis is the description" />
+  <meta name="author" content="FIXME: Author" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css" integrity="sha256-CDVQJfU+jJGU/oyDzvnzuGXbv0rz+SyBsPQwyn7x/jQ=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+  <style>
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .site-content {
+    flex: 1;
+  }
+
+  figure figcaption h4 {
+    font-size: .8rem !important;
+  }
+  </style>
+
+
+  <!-- Google Analytics -->
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', '{{ getenv "GOOGLE_ANALYTICS_ID" }}', 'auto');
+  ga('require', 'cleanUrlTracker');
+  ga('require', 'outboundLinkTracker');
+  ga('require', 'pageVisibilityTracker');
+  ga('require', 'socialWidgetTracker');
+  ga('send', 'pageview');
+  </script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha256-vOtzmT0JTEyCHHVxkhEDvcjAXpCCxPxRPSRDWNU1k9s=" crossorigin="anonymous"></script>
+</head>
+<body lang="en">
+
+<nav class="navbar ">
+  <div class="container">
+    <div class="navbar-brand">
+      <a href="https://disjoint.ca" class="navbar-item">
+        <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 293.631 53.879188" width="131">
+          <g fill-rule="evenodd">
+          <path d="M33.667 47.528l-6.363 6.35-14.81-14.808 6.364-6.35 14.81 14.808z" fill="#598234"/>
+          <path d="M39.093 12.483l14.82 14.81-17.666 17.655-14.82-14.786 17.666-17.68z" fill="#68829e"/>
+          <path d="M36.467 9.892L9.903 36.48 0 26.61 26.587 0l9.88 9.892z" fill="#aebd38"/>
+          </g>
+          <text style="line-height:125%;text-align:start" x="227.924" y="-616.808" transform="matrix(1.25 0 0 1.25 -223.013 808.828)" font-weight="700" font-size="32" letter-spacing="0" word-spacing="0" fill="#505160">
+            <tspan x="227.924" y="-616.808">disjoint.ca</tspan>
+          </text>
+        </svg>
+      </a>
+
+      <a class="navbar-item is-hidden-desktop" href="https://github.com/marvinpinto/ledger-reconciler" target="_blank">
+        <span class="icon" style="color: #333;">
+          <i class="fa fa-github"></i>
+        </span>
+      </a>
+
+      <a class="navbar-item is-hidden-desktop" href="https://twitter.com/marvinpinto" target="_blank">
+        <span class="icon" style="color: #55acee;">
+          <i class="fa fa-twitter"></i>
+        </span>
+      </a>
+
+      <div class="navbar-burger burger" data-target="navMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="navMenu" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item " href="{{.Site.BaseURL}}">Home</a>
+        <a class="navbar-item " href="{{ relref . "/installation.md" }}">Installation</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link " href="#">Plugins</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item " href="{{ relref . "/plugins/chase-canada.md" }}">
+              <span class="icon"><i class="fa fa-credit-card" aria-hidden="true"></i></span>&nbsp;Chase Canada
+            </a>
+          </div>
+        </div>
+        <a class="navbar-item " href="{{ relref . "/development.md" }}">Development</a>
+        <a class="navbar-item " href="{{ relref . "/help.md" }}">Help</a>
+      </div>
+
+      <div class="navbar-end">
+        <a class="navbar-item is-hidden-desktop-only" href="https://twitter.com/marvinpinto" target="_blank">
+          <span class="icon" style="color: #55acee;">
+            <i class="fa fa-twitter"></i>
+          </span>
+        </a>
+        <a class="navbar-item is-hidden-desktop-only" href="https://github.com/marvinpinto/ledger-reconciler" target="_blank">
+          <span class="icon" style="color: #333;">
+            <i class="fa fa-github"></i>
+          </span>
+        </a>
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+            <a class="bd-tw-button button is-primary"
+              data-social-network="Twitter"
+              data-social-action="tweet"
+              data-social-target="https://disjoint.ca/projects/ledger-reconciler"
+              target="_blank"
+              href="https://twitter.com/intent/tweet?text=Ledger Reconciler: Automatically download and reconcile your ledger financial entries&hashtags=ledgercli&url=https://disjoint.ca/projects/ledger-reconciler&via=marvinpinto">
+              <span class="icon">
+                <i class="fa fa-twitter"></i>
+              </span>
+              <span>Tweet</span>
+            </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
