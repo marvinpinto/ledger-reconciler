@@ -8,10 +8,17 @@ const fs = require('fs');
 const request = require('request');
 const decompress = require('gulp-decompress');
 const ip = require('ip');
+const vnuJar = require('vnu-jar');
+const runSequence = require('run-sequence');
+const htmlhint = require('gulp-htmlhint');
 
 const hugoVersion = '0.26';
 const hugoBinary = 'tmp/hugo';
 const hugoUrl = `https://github.com/gohugoio/hugo/releases/download/v${hugoVersion}/hugo_${hugoVersion}_Linux-64bit.tar.gz`;
+
+const files = {
+  html: 'dist/website/**/*.html',
+};
 
 const printOutput = (tag, output) => {
   if (output.stdout) {
@@ -107,6 +114,78 @@ gulp.task('website-dev-server', ['download-hugo'], () => {
       taskTag: tag,
       envVars: {},
     });
+  }).catch((err) => {
+    printOutput(tag, {stdout: '', stderr: err.toString()});
+    throw new Error(`Error in task "${tag}"`);
+  });
+});
+
+gulp.task('vnujar-validate-html5-content', () => {
+  const tag = 'vnujar-validate-html5-content';
+  return Promise.resolve().then(() => {
+    return executeAsyncProcess({
+      process: 'java',
+      processArguments: [
+        '-jar', vnuJar,
+        '--skip-non-html',
+        '--errors-only',
+        '--exit-zero-always',
+        'dist/website/',
+      ],
+      taskTag: tag,
+      envVars: {},
+      failOnStderr: true,
+    });
+  }).catch((err) => {
+    printOutput(tag, {stdout: '', stderr: err.toString()});
+    throw new Error(`Error in task "${tag}"`);
+  });
+});
+
+gulp.task('generate-production-hugo-website', ['download-hugo'], () => {
+  const tag = 'generate-production-hugo-website';
+  return Promise.resolve().then(() => {
+    return executeAsyncProcess({
+      process: hugoBinary,
+      processArguments: [
+        '--baseURL', 'https://disjoint.ca/projects/ledger-reconciler',
+        '--source', 'website',
+        '--config', 'website/config.yaml',
+        '--destination', '../dist/website',
+        '--cleanDestinationDir',
+      ],
+      taskTag: tag,
+      envVars: {},
+    });
+  }).catch((err) => {
+    printOutput(tag, {stdout: '', stderr: err.toString()});
+    throw new Error(`Error in task "${tag}"`);
+  });
+});
+
+gulp.task('analyize-html-content', () => {
+  return gulp.src(files.html)
+    .pipe(htmlhint('.htmlhintrc'))
+    .pipe(htmlhint.reporter('htmlhint-stylish'))
+    .pipe(htmlhint.failReporter({suppress: true}));
+});
+
+gulp.task('website-tests', (cb) => {
+  runSequence(
+    'generate-production-hugo-website',
+    ['analyize-html-content', 'vnujar-validate-html5-content', 'html-proofer'],
+    cb);
+});
+
+gulp.task('html-proofer', () => {
+  const tag = 'run-html-proofer';
+  const htmlproofer = `htmlproofer --allow-hash-href --report-script-embeds --check-html --only-4xx --url-swap "https...disjoint.ca/projects/ledger-reconciler:" ./dist/website`;
+
+  return Promise.resolve().then(() => {
+    return exec(htmlproofer);
+  }).then((result) => {
+    printOutput(tag, result);
+    return;
   }).catch((err) => {
     printOutput(tag, {stdout: '', stderr: err.toString()});
     throw new Error(`Error in task "${tag}"`);

@@ -9,7 +9,7 @@ layout: 'single'
 This plugin allows you to download and auto-categorize all the available
 credit-card transactions in your [Chase Canada][chase-login] account.
 
-{{< figure src="/images/chase-canada-statement-cycle-dropdown.png" title="Chase Canada statement cycle dropdown" >}}
+{{< figure src="/images/chase-canada-statement-cycle-dropdown.png" title="Chase Canada statement cycle dropdown" alt="Chase Canada statement cycle dropdown" >}}
 
 It goes through and automatically selects each statement in the "statement
 cycle" dropdown, and parses that output looking for your credit card

@@ -44,7 +44,7 @@ for help from the community. The latter can be done by [creating a GitHub
 issue][ledger-reconciler-issues].
 
 
-[headless-chrome]: https://chromium.googlesource.com/chromium/src/+/lkgr/headless/readme.md
+[headless-chrome]: https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
 [ledger-cli]: http://ledger-cli.org
 [reckon]: https://github.com/cantino/reckon
 [ledger-reconciler-issues]: https://github.com/marvinpinto/ledger-reconciler/issues
