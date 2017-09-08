@@ -3,11 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FIXME: Title</title>
-  <meta name="description" content="FIXME: THis is the description" />
-  <meta name="author" content="FIXME: Author" />
+  <title>{{ .Params.title }}</title>
+  <meta name="description" content="{{ if isset .Params "description" }}{{ .Params.description }}{{else}}{{ .Summary }}{{ end }}" />
+  <meta name="author" content="Marvin Pinto" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css" integrity="sha256-CDVQJfU+jJGU/oyDzvnzuGXbv0rz+SyBsPQwyn7x/jQ=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@marvinpinto" />
+  <meta name="twitter:title" content="{{ .Params.title }}" />
+  <meta name="twitter:description" content="{{ if isset .Params "description" }}{{ .Params.description }}{{else}}{{ .Summary }}{{ end }}" />
+  <meta name="twitter:image" content="{{ "/images/marvin-pinto-profile.jpg" | absURL }}" />
+
+  <!-- Open Graph Protocol -->
+  <meta name="og:title" content="{{ .Params.title }}" />
+  <meta name="og:type" content="website" />
+  <meta name="og:url" content="{{ .Permalink }}" />
+  <meta name="og:image" content="{{ "/images/marvin-pinto-profile.jpg" | absURL }}" />
 
   <style>
   body {

@@ -1,7 +1,7 @@
 ---
 title: 'Ledger Reconciler'
-description: 'FIXME: description'
 subtitle: 'Automatically download and reconcile your ledger financial entries'
+description: 'Automatically download and reconcile your ledger financial entries'
 date: '2017-09-06'
 lastmod: '2017-09-06'
 ---
