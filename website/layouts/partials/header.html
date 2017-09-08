@@ -78,18 +78,18 @@
 
     <div id="navMenu" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item " href="{{.Site.BaseURL}}">Home</a>
-        <a class="navbar-item " href="{{ relref . "/installation.md" }}">Installation</a>
+        <a class="navbar-item {{ if eq .URL "/" }}is-active{{end}}" href="{{.Site.BaseURL}}">Home</a>
+        <a class="navbar-item {{ if eq .URL "/installation/" }}is-active{{end}}" href="{{ relref . "/installation.md" }}">Installation</a>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link " href="#">Plugins</a>
+          <a class="navbar-link" href="#">Plugins</a>
           <div class="navbar-dropdown">
-            <a class="navbar-item " href="{{ relref . "/plugins/chase-canada.md" }}">
+            <a class="navbar-item" href="{{ relref . "/plugins/chase-canada.md" }}">
               <span class="icon"><i class="fa fa-credit-card" aria-hidden="true"></i></span>&nbsp;Chase Canada
             </a>
           </div>
         </div>
-        <a class="navbar-item " href="{{ relref . "/development.md" }}">Development</a>
-        <a class="navbar-item " href="{{ relref . "/help.md" }}">Help</a>
+        <a class="navbar-item {{ if eq .URL "/development/" }}is-active{{end}}" href="{{ relref . "/development.md" }}">Development</a>
+        <a class="navbar-item {{ if eq .URL "/help/" }}is-active{{end}}" href="{{ relref . "/help.md" }}">Help</a>
       </div>
 
       <div class="navbar-end">
