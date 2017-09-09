@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/marvinpinto/ledger-reconciler.git"
   },
-  "homepage": "https://github.com/marvinpinto/ledger-reconciler",
+  "homepage": "https://disjoint.ca/projects/ledger-reconciler",
   "bugs": "https://github.com/marvinpinto/ledger-reconciler/issues",
   "author": {
     "name": "Marvin Pinto",
@@ -117,9 +117,12 @@
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-jest": "^20.0.3",
     "gulp": "^3.9.1",
+    "gulp-awspublish": "^3.3.0",
+    "gulp-cloudfront-invalidate-aws-publish": "^0.2.1",
     "gulp-decompress": "^2.0.1",
     "gulp-eslint": "^4.0.0",
     "gulp-htmlhint": "^0.3.1",
+    "gulp-rename": "^1.2.2",
     "gulp-streamify": "^1.0.2",
     "gulp-util": "^3.0.8",
     "htmlhint-stylish": "^1.0.3",

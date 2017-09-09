@@ -5,3 +5,4 @@ notes.txt
 /tmp
 /dist
 *.log
+/.env_vars

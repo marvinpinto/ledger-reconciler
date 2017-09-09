@@ -11,6 +11,9 @@ const ip = require('ip');
 const vnuJar = require('vnu-jar');
 const runSequence = require('run-sequence');
 const htmlhint = require('gulp-htmlhint');
+const awspublish = require('gulp-awspublish');
+const rename = require('gulp-rename');
+const cloudfront = require('gulp-cloudfront-invalidate-aws-publish');
 
 const hugoVersion = '0.26';
 const hugoBinary = 'tmp/hugo';
@@ -190,4 +193,34 @@ gulp.task('html-proofer', () => {
     printOutput(tag, {stdout: '', stderr: err.toString()});
     throw new Error(`Error in task "${tag}"`);
   });
+});
+
+gulp.task('deploy-website', ['generate-production-hugo-website'], () => {
+  const publisher = awspublish.create({
+    params: {
+      Bucket: process.env.S3_BUCKET_NAME,
+    },
+  });
+
+  const cfSettings = {
+    distribution: process.env.CLOUDFRONT_DISTRIBUTION_ID,
+    indexRootPath: true,
+  };
+
+  const headers = {
+    'Cache-Control': 'max-age=7200', // 2 hours
+  };
+
+  return gulp.src(['dist/website/**'])
+    .pipe(rename((path) => {
+      // Purpose is to deploy the website files into the
+      // '/projects/ledger-reconciler' subdirectory within the S3 bucket
+      path.dirname = `projects/ledger-reconciler/${path.dirname}`;
+    }))
+    .pipe(publisher.publish(headers))
+    .pipe(publisher.sync('projects/ledger-reconciler'))
+    .pipe(cloudfront(cfSettings))
+    .pipe(awspublish.reporter({
+      states: ['create', 'update', 'delete'],
+    }));
 });
