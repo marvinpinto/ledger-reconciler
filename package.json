@@ -111,6 +111,7 @@
     "write-yaml": "^1.0.0"
   },
   "devDependencies": {
+    "axios": "^0.16.2",
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "child-process-promise": "^2.2.1",

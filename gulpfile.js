@@ -14,6 +14,7 @@ const htmlhint = require('gulp-htmlhint');
 const awspublish = require('gulp-awspublish');
 const rename = require('gulp-rename');
 const cloudfront = require('gulp-cloudfront-invalidate-aws-publish');
+const axios = require('axios');
 
 const hugoVersion = '0.26';
 const hugoBinary = 'tmp/hugo';
@@ -223,4 +224,32 @@ gulp.task('deploy-website', ['generate-production-hugo-website'], () => {
     .pipe(awspublish.reporter({
       states: ['create', 'update', 'delete'],
     }));
+});
+
+gulp.task('submit-sitemaps', () => {
+  const tag = 'submit-sitemaps';
+  return Promise.resolve().then(() => {
+    const urls = [
+      'https://www.google.com/ping',
+      'https://www.bing.com/ping',
+    ];
+
+    const promises = urls.map((ele) => {
+      return axios.request({
+        method: 'get',
+        url: ele,
+        params: {
+          sitemap: 'https://disjoint.ca/projects/ledger-reconciler/sitemap.xml',
+        },
+      });
+    });
+
+    return Promise.all(promises);
+  }).then(() => {
+    printOutput(tag, {stdout: 'Sitemaps successfully submitted', stderr: ''});
+    return Promise.resolve();
+  }).catch((err) => {
+    printOutput(tag, {stdout: '', stderr: err.toString()});
+    throw new Error(`Error in task "${tag}"`);
+  });
 });
