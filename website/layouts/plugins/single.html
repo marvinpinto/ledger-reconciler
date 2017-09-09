@@ -2,6 +2,12 @@
 
 <section class="section site-content">
   <div class="container">
+    <div class="columns">
+      <div class="column is-4 is-offset-8">
+        {{ partial "switchboard.html" . }}
+      </div>
+    </div>
+
     <h1 class="title">{{ .Params.title }}</h1>
     <h2 class="subtitle">{{ .Params.subtitle }}</h2>
     <hr/>
