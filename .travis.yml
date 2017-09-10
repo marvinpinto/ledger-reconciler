@@ -1,0 +1,60 @@
+language: 'node_js'
+sudo: false
+dist: 'trusty'
+node_js:
+  - '8.4.0'
+
+jdk:
+  - 'oraclejdk8'
+
+cache:
+  yarn: true
+  directories:
+    - 'node_modules'
+    - '$HOME/bin'
+
+env:
+  global:
+    - 'AWS_ACCESS_KEY_ID=AKIAJOOPEXUKZIPG6FIA'
+    # AWS_SECRET_ACCESS_KEY
+    - secure: "WpzXkTJSvaCVExECd1Sg/cbNZIYciloLRgNoY0yuIc6BfGkOHiytQyWN1mZqmMsKu2mTAhXPoo0Y0x2Luceky/Epjz71YCgSoZNSVYSPvEEs4jEozMfh/Dc1O3xxSbRLRYKqnd+3DsqyTPowFbFkfbrOWQnVI3ygKEyd9UcTyeqGodP+Dybz6KiuzyoRcNxzIJ2SpG2Vbms6LOnrEeZtSIFrLfERoQn8ELdidh5FGRuzIAsDyVpPODtJp5WAMU+xNn4iCKqCv56vOQUK7y5zsEJ14vRIq/ut6TZEf3SSFOFFe88H1FjdqZKmZ812wHb4EYRTjkHSQs0+UFsnaQbeCP87d8vHck+w3i3aX9rHBD37IXyBB0iei580y7NXkpFIrlhZXX1hIaelvw6fGANYJQg+KPjzCNESHFAoswpH+TRXN72xY+UCWuD4kdU+sFhEsC77lxPowUF0If4iwMUUBRkAQqAeuoVT2zGEKvj7iPLqIPbYEuB5DBR42IaDvsqnsLh3rbdzUB0/Y4LhKNcy4Sl54fXKKkaulW14GFnxFt7RRxSA7yqrMjOI+qp4qfbUesGvpmU+zo9IMwNl41cP8o2Co4xvKYhFTUYKEhbxgk8Pm9Sa0ho/wU77q6UgWdLJLxX2ZFhWfKh/sj01pZKt/YI9AZfv4LB72iKO0bec86A="
+    - 'CLOUDFRONT_DISTRIBUTION_ID=E1KIBDKGZ4V1S4'
+    - 'GOOGLE_ANALYTICS_ID=UA-70495014-1'
+    - 'NOKOGIRI_USE_SYSTEM_LIBRARIES=true'
+    - 'S3_BUCKET_NAME=disjoint.ca'
+
+before_install:
+  - 'git lfs install'
+  - 'git lfs pull'
+  - 'rvm use 2.3'
+
+install:
+  - 'yarn install'
+
+script:
+  - 'yarn run lint'
+  - 'yarn run all-tests'
+
+deploy:
+  - provider: 'script'
+    script: 'yarn run deploy-website'
+    skip_cleanup: true
+    on:
+      branch: 'master'
+      repo: 'marvinpinto/ledger-reconciler'
+  - provider: 'npm'
+    email: 'npm@pinto.im'
+    api_key:
+      - secure: "BuGkIrmI5BmtO7wKAdUJUmfp60D1rZA1nupPQEd8ejuWn6ZKIWXg6NBGLdyZeruVR+Q94n5bdufyvdvji13E5uPjNGxA3BKrqKih1yyxNnhOzhFtoZxYku2EjexKwIFW49b0sMzL2l8oachxnqnmNzOT4qyqMr2WYXhvBd2IVsLLrG3TN+nT+Pk5tUxV24otDm/uHC4SuyIsXeAggj00U+yyVeF6WV9z/jKYDPfQFOPRfsrMVa2Weah8u5L6iEmO84y4YXYvB4eLgJ3FtdjiTEMakEyWmmnEXDgJ8CQWk30oTH1mIlIb7sjb+aSl4swf1B92vUrlsUtZQNjVcuPWxz2kRq0+iGhMRQc7YxygBrbdVtWNVieNn/TC9Pb+wltkzF6IG4pAvTm96fVqTStLzC/i8TdemYBMNdYDPab3AXg2lax+zbMYWZIcHDZf/iKsx0uhjTWbMaflpcj9hCKGRmonSXtgJugO3+QBuU+ldYydozNV8aUS7VHGzS+JDnJwad0Ml/KNUTML9zgc0nSHht4eYyP0xAwdi5y96KTDCBP468i1WeDL6MrUQAYueDm7RmA7ERzWZJ6Oop/KFLn9TvKftYhWuphctNER4mDFtmGUHt3etVZ9zcPA8KdPW/bKlQqlVZMoZPidin7lvTEy3oMSSHDUv3QmpHghjOfy2WY="
+    on:
+      tags: true
+      repo: 'marvinpinto/ledger-reconciler'
+
+notifications:
+  email: false
+  webhooks:
+    urls:
+      - 'https://webhooks.gitter.im/e/c134ad3cd43094d5844f'
+    on_success: change
+    on_failure: always
+    on_start: never
