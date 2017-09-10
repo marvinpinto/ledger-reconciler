@@ -1,0 +1,4 @@
+canonifyurls: true
+disableKinds:
+  - 'taxonomy'
+  - 'taxonomyTerm'

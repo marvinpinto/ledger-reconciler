@@ -1,0 +1,8 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {{ range .Data.Pages }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    <lastmod>{{ if isset .Params "lastmod" }}{{ safeHTML ( .Params.lastmod | dateFormat "2006-01-02T15:04:05-07:00" ) }}{{else}}{{ safeHTML ( now | dateFormat "2006-01-02T15:04:05-07:00" ) }}{{ end }}</lastmod>
+  </url>
+  {{ end }}
+</urlset>

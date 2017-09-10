@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/marvinpinto/ledger-reconciler.git"
   },
-  "homepage": "https://github.com/marvinpinto/ledger-reconciler",
+  "homepage": "https://disjoint.ca/projects/ledger-reconciler",
   "bugs": "https://github.com/marvinpinto/ledger-reconciler/issues",
   "author": {
     "name": "Marvin Pinto",
@@ -21,8 +21,11 @@
     "ledger-reconciler": "./index.js"
   },
   "scripts": {
+    "install": "gem install --user-install --no-rdoc --no-ri html-proofer",
     "lint": "gulp lint-javascript",
     "test": "jest --no-watchman --coverage",
+    "all-tests": "yarn test && gulp website-tests",
+    "start": "gulp website-dev-server",
     "cleanup": "rm -rf coverage node_modules && yarn cache clean",
     "preversion": "[ $(git rev-parse --abbrev-ref HEAD) = 'master' ] && yarn run lint && yarn test",
     "preversion:indexjs": "sed -i \"s/[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+/$npm_package_version/g\" index.js",
@@ -108,14 +111,27 @@
     "write-yaml": "^1.0.0"
   },
   "devDependencies": {
+    "axios": "^0.16.2",
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "child-process-promise": "^2.2.1",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-jest": "^20.0.3",
     "gulp": "^3.9.1",
+    "gulp-awspublish": "^3.3.0",
+    "gulp-cloudfront-invalidate-aws-publish": "^0.2.1",
+    "gulp-decompress": "^2.0.1",
     "gulp-eslint": "^4.0.0",
+    "gulp-htmlhint": "^0.3.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-streamify": "^1.0.2",
     "gulp-util": "^3.0.8",
-    "jest": "^20.0.4"
+    "htmlhint-stylish": "^1.0.3",
+    "ip": "^1.1.5",
+    "jest": "^20.0.4",
+    "request": "^2.81.0",
+    "run-sequence": "^2.1.0",
+    "vinyl-source-stream": "^1.1.0",
+    "vnu-jar": "^17.9.0"
   }
 }

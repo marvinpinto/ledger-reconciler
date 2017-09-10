@@ -2,3 +2,7 @@
 /.ledger-reconciler.yaml
 /coverage
 notes.txt
+/tmp
+/dist
+*.log
+/.env_vars
