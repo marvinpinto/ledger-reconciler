@@ -37,7 +37,7 @@ script:
 
 deploy:
   - provider: 'script'
-    script: 'yarn run deploy-website'
+    script: 'yarn run deploy-website && yarn run submit-sitemaps'
     skip_cleanup: true
     on:
       branch: 'master'
