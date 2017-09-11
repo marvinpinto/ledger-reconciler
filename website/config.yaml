@@ -2,3 +2,6 @@ canonifyurls: true
 disableKinds:
   - 'taxonomy'
   - 'taxonomyTerm'
+pygmentsstyle: 'lovelace'
+pygmentsuseclasses: false
+pygmentscodefences: true

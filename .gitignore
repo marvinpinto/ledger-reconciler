@@ -6,3 +6,4 @@ notes.txt
 /dist
 *.log
 /.env_vars
+*.ledger

@@ -21,7 +21,7 @@
     "ledger-reconciler": "./index.js"
   },
   "scripts": {
-    "install": "gem install --no-rdoc --no-ri html-proofer",
+    "install": "pip install --user Pygments && gem install --no-rdoc --no-ri html-proofer",
     "lint": "gulp lint-javascript",
     "test": "jest --no-watchman --coverage",
     "all-tests": "yarn test && gulp website-tests",
@@ -107,7 +107,7 @@
     "chalk": "^2.1.0",
     "commander": "^2.11.0",
     "fs-extra": "^4.0.1",
-    "puppeteer": "^0.10.1",
+    "puppeteer": "^0.10.2",
     "read-yaml": "^1.1.0",
     "temp": "^0.8.3",
     "write-yaml": "^1.0.0"
@@ -118,7 +118,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "child-process-promise": "^2.2.1",
     "eslint-config-google": "^0.9.1",
-    "eslint-plugin-jest": "^20.0.3",
+    "eslint-plugin-jest": "^21.0.2",
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.0",
     "gulp-cloudfront-invalidate-aws-publish": "^0.2.1",
@@ -130,7 +130,7 @@
     "gulp-util": "^3.0.8",
     "htmlhint-stylish": "^1.0.3",
     "ip": "^1.1.5",
-    "jest": "^20.0.4",
+    "jest": "^21.0.2",
     "request": "^2.81.0",
     "run-sequence": "^2.1.0",
     "vinyl-source-stream": "^1.1.0",

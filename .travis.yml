@@ -31,6 +31,9 @@ before_install:
 install:
   - 'yarn install'
 
+before_script:
+  - 'unset JAVA_TOOL_OPTIONS && unset _JAVA_OPTIONS'
+
 script:
   - 'yarn run lint'
   - 'yarn run all-tests'
