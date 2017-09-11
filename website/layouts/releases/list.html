@@ -1,0 +1,26 @@
+{{ partial "header.html" . }}
+
+<section class="section site-content">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-4 is-offset-8">
+        {{ partial "switchboard.html" . }}
+      </div>
+    </div>
+
+    <h1 class="title">{{ .Params.title }}</h1>
+    <h2 class="subtitle">{{ .Params.subtitle }}</h2>
+    <hr/>
+
+    <div class="content">
+      {{ .Content }}
+
+      {{ range .Paginator.Pages.ByTitle.Reverse }}
+      <h2><a href="{{ .Permalink }}">{{.Title}}</a></h2>
+      {{.Content}}
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ partial "footer.html" . }}

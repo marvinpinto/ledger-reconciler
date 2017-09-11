@@ -6,5 +6,6 @@
 [![Creative Commons BY-NC-SA 3.0](https://img.shields.io/badge/license-CC--BY--NC--SA%203.0-brightgreen.svg?style=flat-square)](website/content/license.md)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/ledger-reconciler/Lobby)
 
-- Documentation website: https://disjoint.ca/projects/ledger-reconciler
-- GitHub repository: https://github.com/marvinpinto/ledger-reconciler
+- [Website](https://disjoint.ca/projects/ledger-reconciler)
+- [GitHub repository](https://github.com/marvinpinto/ledger-reconciler)
+- [Release notes](https://disjoint.ca/projects/ledger-reconciler/releases)
