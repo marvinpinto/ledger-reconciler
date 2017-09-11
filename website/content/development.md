@@ -83,6 +83,14 @@ the [gitter.im][gitter-im-chatroom] as well if you need synchronous help and
 I'll do what I can.
 
 
+### Release Procedure
+
+1. On **master**, create a new release document with all relevant highlights.
+   (e.g. `content/releases/<NEW VERSION>.md`)
+1. Update `content/releases/_index.md` to reflect the unreleased state.
+1. Cut a new release: `yarn version --new-version <NEW VERSION>`
+
+
 [nodejs-current]: https://nodejs.org/en/download/current
 [yarnpkg]: https://yarnpkg.com
 [ledger-reconciler]: https://github.com/marvinpinto/ledger-reconciler
