@@ -34,6 +34,7 @@ minimize duplicate transactions.
 Ledger Reconciler currently supports the following financial institutions:
 
 - [Chase Canada][chase-canada-plugin]
+- [PC Financial Mastercard][pc-mastercard-plugin]
 
 
 <h2 class="content-subhead">Don't see your financial institution?</h2>
@@ -49,3 +50,4 @@ issue][ledger-reconciler-issues].
 [reckon]: https://github.com/cantino/reckon
 [ledger-reconciler-issues]: https://github.com/marvinpinto/ledger-reconciler/issues
 [chase-canada-plugin]: {{< relref "/plugins/chase-canada.md" >}}
+[pc-mastercard-plugin]: {{< relref "/plugins/pc-mastercard.md" >}}
