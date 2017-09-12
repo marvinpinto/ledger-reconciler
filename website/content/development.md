@@ -75,12 +75,24 @@ await page.pdf({path: 'screenshot.pdf'});
 ```
 
 
+### Website Development
+
+If you need to update the Ledger Reconciler documentation - under the
+[website][ledger-reconciler-website-dir] directory - you might find it useful
+to run the local dev server to see what your changes look like before
+submitting upstream.
+
+``` bash
+yarn start
+```
+
+
 ### Getting Help
 
 This project is not very active at the moment so your best bet is to open up a
-[new issue][ledger-reconciler-issues] with the problem you're facing. Stop by
-the [gitter.im][gitter-im-chatroom] as well if you need synchronous help and
-I'll do what I can.
+[new issue][ledger-reconciler-issues] with the problem you're facing. You can
+also stop by the [gitter.im][gitter-im-chatroom] chat room if you need
+synchronous help and I'll do what I can.
 
 
 ### Release Procedure
@@ -89,6 +101,8 @@ I'll do what I can.
    (e.g. `content/releases/<NEW VERSION>.md`)
 1. Update `content/releases/_index.md` to reflect the unreleased state.
 1. Cut a new release: `yarn version --new-version <NEW VERSION>`
+1. Update the release notes on GitHub to point back to the website release
+   page.
 
 
 [nodejs-current]: https://nodejs.org/en/download/current
@@ -101,3 +115,4 @@ I'll do what I can.
 [installation]: {{< relref "/installation.md" >}}
 [gitter-im-chatroom]: https://gitter.im/ledger-reconciler/Lobby
 [ledger-reconciler-plugins-dir]: https://github.com/marvinpinto/ledger-reconciler/tree/master/lib/plugins
+[ledger-reconciler-website-dir]: https://github.com/marvinpinto/ledger-reconciler/tree/master/website
