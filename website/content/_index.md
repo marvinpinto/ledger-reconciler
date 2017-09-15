@@ -36,6 +36,7 @@ Ledger Reconciler currently supports the following financial institutions:
 - [American Express][amex-plugin]
 - [Chase Canada][chase-canada-plugin]
 - [PC Financial Mastercard][pc-mastercard-plugin]
+- [Tangerine Bank][tangerine-plugin]
 
 
 <h2 class="content-subhead">Don't see your financial institution?</h2>
@@ -53,3 +54,4 @@ issue][ledger-reconciler-issues].
 [chase-canada-plugin]: {{< relref "/plugins/chase-canada.md" >}}
 [pc-mastercard-plugin]: {{< relref "/plugins/pc-mastercard.md" >}}
 [amex-plugin]: {{< relref "/plugins/amex.md" >}}
+[tangerine-plugin]: {{< relref "/plugins/tangerine-bank.md" >}}
