@@ -37,4 +37,30 @@ describe('toCSV function', () => {
 
     expect(toCSV(inputArgs)).toEqual('09/01/2017,$5.99,"amazon.com"\r\n09/01/2017,$6.99,"amazon.ca"\r\n');
   });
+
+  it('strips out commas from the merchant field', () => {
+    expect.assertions(1);
+    const inputArgs = [
+      {
+        date: 1504271594569,
+        amount: '$5.99',
+        merchant: '"amazon,com"',
+      },
+    ];
+
+    expect(toCSV(inputArgs)).toEqual('09/01/2017,$5.99,"amazoncom"\r\n');
+  });
+
+  it('strips out commas from the amount field', () => {
+    expect.assertions(1);
+    const inputArgs = [
+      {
+        date: 1504271594569,
+        amount: '$1,500.99',
+        merchant: '"amazon.com"',
+      },
+    ];
+
+    expect(toCSV(inputArgs)).toEqual('09/01/2017,$1500.99,"amazon.com"\r\n');
+  });
 });
