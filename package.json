@@ -1,6 +1,6 @@
 {
   "name": "ledger-reconciler",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Automatically download and reconcile your ledger financial entries",
   "main": "index.js",
   "repository": {

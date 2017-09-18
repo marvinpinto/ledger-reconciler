@@ -15,7 +15,7 @@ const ledgerBalanceReport = require('./lib/ledgerBalanceReport');
 const jsYaml = require('js-yaml');
 
 program
-  .version('0.0.2')
+  .version('0.1.0')
   .option('-c, --config <config file>', 'Ledger Reconciler config file')
   .option('--silent', 'Suppress all output except warnings & errors')
   .option('--debug', 'Print out debug output')
