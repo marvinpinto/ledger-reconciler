@@ -69,6 +69,6 @@ after `ledger-reconciler` is run **will not be recorded** as
 processed".
 
 
-[amex-login]: https://global.americanexpress.com/myca/logon/canlac/action/LogonHandler?request_type=LogonHandler&Face=en_CA&inav=ca_utility_login
+[amex-login]: https://global.americanexpress.com/login
 [ledger-structuring-your-account]: http://ledger-cli.org/3.0/doc/ledger3.html#Structuring-your-Accounts
 [ledger-currency]: http://ledger-cli.org/3.0/doc/ledger3.html#Currency-and-Commodities
