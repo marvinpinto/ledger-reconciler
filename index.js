@@ -3,7 +3,6 @@
 const util = require('util');
 const program = require('commander');
 const Logger = require('./lib/Logger');
-const readYaml = util.promisify(require('read-yaml'));
 const puppeteer = require('puppeteer');
 const toCSV = require('./lib/toCSV');
 const toLedger = require('./lib/toLedger');
@@ -13,6 +12,7 @@ const writeYaml = util.promisify(require('write-yaml'));
 const collateLedgerData = require('./lib/collateLedgerData');
 const ledgerBalanceReport = require('./lib/ledgerBalanceReport');
 const jsYaml = require('js-yaml');
+const parseConfiguration = require('./lib/parseConfiguration');
 
 program
   .version('0.1.0')
@@ -41,28 +41,30 @@ if (!configFileName) {
 }
 
 const main = async () => {
-  let parsedConfig = await readYaml(configFileName);
+  const rawConfiguration = await parseConfiguration(configFileName);
+  let encrConfig = rawConfiguration.encrypted;
+  let decrConfig = rawConfiguration.decrypted;
 
-  if (!parsedConfig.plugins || !parsedConfig.plugins.length) {
+  if (!decrConfig.plugins || !decrConfig.plugins.length) {
     logger.warn(`You do not appear to have any plugins listed in your ${configFileName} config file`);
     process.exit(0);
   }
 
   const browser = await puppeteer.launch({
-    args: parsedConfig.chromiumHeadlessArgs,
+    args: decrConfig.chromiumHeadlessArgs,
     dumpio: false, // useful for debugging
   });
 
   // Write out the reckon token data to a temp file
   const tempYamlFile = temp.openSync();
-  await writeYaml(tempYamlFile.path, parsedConfig.reckonTokens);
+  await writeYaml(tempYamlFile.path, decrConfig.reckonTokens);
 
   // Write out the original ledger data to a temp file
   const tempLedgerFile = temp.openSync();
-  await fs.copy(parsedConfig.ledgerDataFile, tempLedgerFile.path);
+  await fs.copy(decrConfig.ledgerDataFile, tempLedgerFile.path);
 
-  for (let i = 0; i < parsedConfig.plugins.length; i++) {
-    const plugin = parsedConfig.plugins[i];
+  for (let i = 0; i < decrConfig.plugins.length; i++) {
+    const plugin = decrConfig.plugins[i];
 
     logger.info(`Now processing plugin: ${plugin.name}`);
     const ReconcilerPlugin = require(plugin.location);
@@ -81,7 +83,7 @@ const main = async () => {
       ledgerOutput = await toLedger({
         ledgerAccountName: plugin.ledgerAccountName,
         ledgerCurrency: plugin.ledgerCurrency,
-        reckonCli: parsedConfig.reckonCli,
+        reckonCli: decrConfig.reckonCli,
         csvInputFileName: tempFile.path,
         reckonTokensTempFileName: tempYamlFile.path,
         logger,
@@ -92,7 +94,7 @@ const main = async () => {
     await fs.appendFile(tempLedgerFile.path, ledgerOutput);
 
     // Update the most recent transaction date for this plugin
-    parsedConfig.plugins[i].mostRecentTransactionDate = inst.getMostRecentTransactionDate();
+    encrConfig.plugins[i].mostRecentTransactionDate = inst.getMostRecentTransactionDate();
 
     // Print out the remaining balance as determined by this plugin
     logger.info(`Remaining balance for plugin ${plugin.name}: ${inst.getRemainingBalance()}`);
@@ -103,23 +105,23 @@ const main = async () => {
 
   const collatedLedgerOutput = await collateLedgerData({
     tempLedgerFileName: tempLedgerFile.path,
-    ledgerCli: parsedConfig.ledgerCli,
+    ledgerCli: decrConfig.ledgerCli,
     logger,
   });
 
   if (program.dryRun) {
-    logger.info(`Will replace ledger file "${parsedConfig.ledgerDataFile}" with:\r\n${collatedLedgerOutput}`);
-    logger.info(`Will replace config file "${configFileName}" with:\r\n${jsYaml.safeDump(parsedConfig)}`);
+    logger.info(`Will replace ledger file "${decrConfig.ledgerDataFile}" with:\r\n${collatedLedgerOutput}`);
+    logger.info(`Will replace config file "${configFileName}" with:\r\n${jsYaml.safeDump(encrConfig)}`);
     return Promise.resolve();
   }
 
   // Write out the update config & ledger data files
-  await writeYaml(configFileName, parsedConfig);
-  await fs.outputFile(parsedConfig.ledgerDataFile, collatedLedgerOutput);
+  await writeYaml(configFileName, encrConfig);
+  await fs.outputFile(decrConfig.ledgerDataFile, collatedLedgerOutput);
 
   const ledgerBalanceReportOutput = await ledgerBalanceReport({
-    ledgerFileName: parsedConfig.ledgerDataFile,
-    ledgerCli: parsedConfig.ledgerCli,
+    ledgerFileName: decrConfig.ledgerDataFile,
+    ledgerCli: decrConfig.ledgerCli,
     logger,
   });
   logger.info(`Ledger Balance Report:\r\n${ledgerBalanceReportOutput}`);

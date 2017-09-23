@@ -1603,6 +1603,10 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
+gpg@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/gpg/-/gpg-0.6.0.tgz#5de7bead2c0073665742927a473cd4677e3b54a0"
+
 graceful-fs@^3.0.0:
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-3.0.11.tgz#7613c778a1afea62f25c630a086d7f3acbbdd818"
