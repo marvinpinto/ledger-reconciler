@@ -100,13 +100,15 @@
       }
     },
     "coveragePathIgnorePatterns": [
-      "<rootDir>/index.js"
+      "<rootDir>/index.js",
+      "<rootDir>/lib/parseConfiguration.js"
     ]
   },
   "dependencies": {
     "chalk": "^2.1.0",
     "commander": "^2.11.0",
     "fs-extra": "^4.0.1",
+    "gpg": "^0.6.0",
     "puppeteer": "^0.10.2",
     "read-yaml": "^1.1.0",
     "temp": "^0.8.3",
