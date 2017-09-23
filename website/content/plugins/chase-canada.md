@@ -1,7 +1,7 @@
 ---
 title: 'Chase Canada Plugin'
 date: '2017-09-07'
-lastmod: '2017-09-07'
+lastmod: '2017-09-23'
 type: 'plugins'
 layout: 'single'
 ---
@@ -42,23 +42,6 @@ plugins:
     ledgerAccountName: 'Liabilities:Chase-Example-Visa'
     ledgerCurrency: 'CAD '
 ```
-
-
-## Environment Variables
-
-Instead of using the configuration file to store your Chase Canada secrets such
-as your username, password, and security answer, this plugin allows you to
-instead supply these values as environment variables. The plugin first checks
-the config file for these values and then falls back to checking the
-environment variables.
-
-Set the following environment variables before executing the
-`ledger-reconciler` program and you should then be able to forego storing
-secrets in your config file:
-
-- `CHASECANADA_PLUGIN_USERNAME` - Your Chase banking username.
-- `CHASECANADA_PLUGIN_PASSWORD` - Your Chase banking password.
-- `CHASECANADA_PLUGIN_SECURITYANSWER` - The security answer to your Chase banking security question.
 
 
 ## Caveats

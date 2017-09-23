@@ -1,7 +1,7 @@
 ---
 title: 'American Express Plugin'
 date: '2017-09-13'
-lastmod: '2017-09-13'
+lastmod: '2017-09-23'
 type: 'plugins'
 layout: 'single'
 ---
@@ -40,22 +40,6 @@ plugins:
     ledgerAccountName: 'Liabilities:AMEX'
     ledgerCurrency: 'CAD '
 ```
-
-
-## Environment Variables
-
-Instead of using the configuration file to store your American Express secrets
-such as your username and password, this plugin allows you to instead supply
-these values as environment variables instead. The plugin first checks the
-config file for these values and then falls back to checking the environment
-variables.
-
-Set the following environment variables before executing the
-`ledger-reconciler` program and you should then be able to forego storing
-secrets in your config file:
-
-- `AMEX_PLUGIN_USERNAME` - Your American Express username.
-- `AMEX_PLUGIN_PASSWORD` - Your American Express password.
 
 
 ## Caveats

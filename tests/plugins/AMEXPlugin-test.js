@@ -6,12 +6,7 @@ describe('AMEXPlugin', () => {
   let browser = jest.fn();
   let pluginArgs = {};
 
-  afterEach(() => {
-    delete process.env.AMEX_PLUGIN_USERNAME;
-    delete process.env.AMEX_PLUGIN_PASSWORD;
-  });
-
-  it('throws an error if a username is not set via either the config file or env variable', () => {
+  it('throws an error if a username is not set via the config file', () => {
     expect.assertions(1);
     pluginArgs = {
       mostRecentTransactionDate: 'yesterday',
@@ -24,18 +19,7 @@ describe('AMEXPlugin', () => {
     }
   });
 
-  it('falls back to the username set via the environment variable, if not specified in the config file', () => {
-    expect.assertions(1);
-    process.env.AMEX_PLUGIN_USERNAME = 'fake-username';
-    pluginArgs = {
-      mostRecentTransactionDate: 'yesterday',
-      password: 'fake-password',
-    };
-    amexPlugin = new AMEXPlugin(browser, logger, pluginArgs);
-    expect(amexPlugin.pluginArgs.username).toEqual('fake-username');
-  });
-
-  it('throws an error if a password is not set via either the config file or env variable', () => {
+  it('throws an error if a password is not set via the config file', () => {
     expect.assertions(1);
     pluginArgs = {
       mostRecentTransactionDate: 'yesterday',
@@ -46,17 +30,6 @@ describe('AMEXPlugin', () => {
     } catch (error) {
       expect(error).toEqual(Error('You do not appear to have either the "password" key set in your config file for the American Express plugin.'));
     }
-  });
-
-  it('falls back to the password set via the environment variable, if not specified in the config file', () => {
-    expect.assertions(1);
-    process.env.AMEX_PLUGIN_PASSWORD = 'fake-password';
-    pluginArgs = {
-      mostRecentTransactionDate: 'yesterday',
-      username: 'fake-username',
-    };
-    amexPlugin = new AMEXPlugin(browser, logger, pluginArgs);
-    expect(amexPlugin.pluginArgs.password).toEqual('fake-password');
   });
 
   it('uses the most recent transaction date, if supplied via the config file', () => {
