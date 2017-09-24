@@ -1,7 +1,7 @@
 ---
 title: 'Tangerine Banking Plugin'
 date: '2017-09-16'
-lastmod: '2017-09-16'
+lastmod: '2017-09-24'
 type: 'plugins'
 layout: 'single'
 ---
@@ -24,7 +24,7 @@ for the Tangerine Banking plugin:
 - `location` - Location of the plugin. Set this to `./lib/plugins/TangerineBankingPlugin`.
 - `username` - Your Tangerine client number, card number, or username.
 - `bankingWebsitePin` - Your Tangering website PIN.
-- `accountName` - The account name listed on your Tangerine banking portal. The parser will go through and retrieve all the transactions within the last 12 months from this account. e.g. `Tangerine Chequing Account - Chequing - 123456789`.
+- `accountNumber` - The account number listed on your Tangerine banking portal. The parser will go through and retrieve all the transactions within the last 12 months from this account. e.g. `123456789`.
 - `securityQuestions` - A list of all the security questions and answers associated with your Tangerine account. See the example below on how to format this list.
 - `ledgerAccountName` - The name of the [Ledger account][ledger-structuring-your-account] you would like to associate these transactions to.
 - `ledgerCurrency` - The [Ledger currency][ledger-currency] you would like these transactions listed in.
@@ -36,7 +36,7 @@ plugins:
     location: './lib/plugins/TangerineBankingPlugin'
     username: '11122233'
     bankingWebsitePin: '123456'
-    accountName: 'Tangerine Chequing Account - Chequing - 123456789'
+    accountNumber: '123456789'
     securityQuestions:
       - question: 'Who won the super bowl last year'
         answer: 'Raptors'
@@ -57,6 +57,6 @@ What this means is that any transactions that come in on the same day after
 considers each of these newer transactions as "already processed".
 
 
-[tangerine-login]: https://secure.tangerine.ca/web/InitialTangerine.html?command=displayLogin&device=web&locale=en_CA
+[tangerine-login]: https://www.tangerine.ca/app
 [ledger-structuring-your-account]: http://ledger-cli.org/3.0/doc/ledger3.html#Structuring-your-Accounts
 [ledger-currency]: http://ledger-cli.org/3.0/doc/ledger3.html#Currency-and-Commodities

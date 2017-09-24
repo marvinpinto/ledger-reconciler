@@ -10,7 +10,7 @@ describe('TangerineBankingPlugin', () => {
     pluginArgs = {
       username: 'fake-username',
       bankingWebsitePin: '12356',
-      accountName: 'Tangerine Chequing Account - Chequing - 123456789',
+      accountNumber: '123456789',
       securityQuestions: [
         {
           question: 'What is your favourite number',
@@ -47,14 +47,14 @@ describe('TangerineBankingPlugin', () => {
     }
   });
 
-  it('throws an error if the account name is not set via the config file', () => {
+  it('throws an error if the account number is not set via the config file', () => {
     expect.assertions(1);
-    delete pluginArgs.accountName;
+    delete pluginArgs.accountNumber;
 
     try {
       tangerineBankingPlugin = new TangerineBankingPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have the "accountName" key set in your config file for the Tangerine Banking plugin.'));
+      expect(error).toEqual(Error('You do not appear to have the "accountNumber" key set in your config file for the Tangerine Banking plugin.'));
     }
   });
 
