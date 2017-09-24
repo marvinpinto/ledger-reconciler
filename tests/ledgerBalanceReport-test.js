@@ -3,12 +3,14 @@ const ledgerBalanceReport = require('../lib/ledgerBalanceReport');
 jest.mock('util', () => ({
   promisify: () => ((filename, args) => {
     expect(filename).toEqual('/usr/local/bin/ledger');
-    expect(args.length).toEqual(5);
+    expect(args.length).toEqual(7);
     expect(args[0]).toEqual('--date-format');
     expect(args[1]).toEqual('%Y-%m-%d');
     expect(args[2]).toEqual('-f');
     expect(args[3]).toEqual('/tmp/fake-ledger.dat');
     expect(args[4]).toEqual('balance');
+    expect(args[5]).toEqual('Assets');
+    expect(args[6]).toEqual('Liabilities');
 
     return Promise.resolve({
       stdout: 'fake stdout output',
@@ -50,7 +52,7 @@ describe('ledgerBalanceReport function', () => {
   });
 
   it('calls ledger with the correct arguments', async () => {
-    expect.assertions(8);
+    expect.assertions(10);
 
     const inputArgs = {
       ledgerFileName: '/tmp/fake-ledger.dat',
