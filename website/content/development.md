@@ -1,7 +1,7 @@
 ---
 title: 'Development & Contributing Upstream'
 date: '2017-09-07'
-lastmod: '2017-09-07'
+lastmod: '2017-09-25'
 type: 'docs'
 layout: 'single'
 ---
