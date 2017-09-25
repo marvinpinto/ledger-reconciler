@@ -64,6 +64,12 @@ getRemainingBalance() {
 }
 ```
 
+They also need to set the `page` variable to that of a new browser instance,
+for example:
+``` js
+this.page = await this.browser.newPage();
+```
+
 Your best bet is to extend the `BasePlugin` class - have a look at the examples
 in the [lib/plugins][ledger-reconciler-plugins-dir] directory on GitHub.
 

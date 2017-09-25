@@ -98,6 +98,9 @@ const main = async () => {
 
     // Print out the remaining balance as determined by this plugin
     logger.info(`Remaining balance for plugin ${plugin.name}: ${inst.getRemainingBalance()}`);
+
+    // Clear out the user session
+    await inst.clearUserSession();
   }
 
   // Close the chromium browser instance as we no longer require it
