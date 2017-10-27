@@ -183,7 +183,7 @@ gulp.task('website-tests', (cb) => {
 
 gulp.task('html-proofer', () => {
   const tag = 'run-html-proofer';
-  const htmlproofer = `htmlproofer --allow-hash-href --report-script-embeds --check-html --only-4xx --url-swap "https...disjoint.ca/projects/ledger-reconciler:" ./dist/website`;
+  const htmlproofer = `htmlproofer --allow-hash-href --report-script-embeds --check-html --only-4xx --url-swap "https...disjoint.ca/projects/ledger-reconciler:" --url-ignore "/global.americanexpress.com/" ./dist/website`;
 
   return Promise.resolve().then(() => {
     return exec(htmlproofer);
