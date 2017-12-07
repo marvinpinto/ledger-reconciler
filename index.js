@@ -23,12 +23,8 @@ program
   .parse(process.argv);
 
 process.on('unhandledRejection', (err) => {
-  if (program.debug) {
-    logger.error(err.stack);
-    process.exit(1);
-  }
-
   logger.error(err);
+  logger.error(err.stack);
   process.exit(1);
 });
 
