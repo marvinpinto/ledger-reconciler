@@ -110,7 +110,7 @@
     "fs-extra": "^4.0.1",
     "gpg": "^0.6.0",
     "promise-retry": "^1.1.1",
-    "puppeteer": "^0.10.2",
+    "puppeteer": "^1.4.0",
     "read-yaml": "^1.1.0",
     "temp": "^0.8.3",
     "write-yaml": "^1.0.0"
