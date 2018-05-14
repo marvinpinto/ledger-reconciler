@@ -32,7 +32,9 @@
     "version": "npm run preversion:indexjs && git add index.js",
     "postversion": "git push && git push --tags && yarn run cleanup",
     "deploy-website": "gulp deploy-website",
-    "submit-sitemaps": "gulp submit-sitemaps"
+    "submit-sitemaps": "gulp submit-sitemaps",
+    "dev:dry-run": "PATH=bin/:${PATH} node index.js --debug --dry-run",
+    "dev:live-run": "PATH=bin/:${PATH} node index.js --debug"
   },
   "eslintConfig": {
     "extends": [
