@@ -8,3 +8,4 @@ notes.txt
 /.env_vars
 *.ledger
 /bin
+/debug-*
