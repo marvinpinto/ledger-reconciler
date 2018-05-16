@@ -12,3 +12,4 @@ lastmod: '2018-05-16'
 - Update the Tangerine banking plugin to use the raw Tangerine API. [#18](https://github.com/marvinpinto/ledger-reconciler/pull/18)
 - Upgrade to Puppeteer 1.4.x. [#18](https://github.com/marvinpinto/ledger-reconciler/pull/18)
 - Update all the plugins to work with Puppeteer 1.4.x. [#18](https://github.com/marvinpinto/ledger-reconciler/pull/18)
+- Tangerine transaction processing bug fixes. [#19](https://github.com/marvinpinto/ledger-reconciler/pull/19)
