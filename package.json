@@ -115,6 +115,7 @@
     "promise-retry": "^1.1.1",
     "puppeteer": "^1.4.0",
     "read-yaml": "^1.1.0",
+    "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
     "temp": "^0.8.3",
     "write-yaml": "^1.0.0"
@@ -138,7 +139,6 @@
     "htmlhint-stylish": "^1.0.3",
     "ip": "^1.1.5",
     "jest": "^21.0.2",
-    "request": "^2.85.0",
     "run-sequence": "^2.1.0",
     "vinyl-source-stream": "^1.1.0",
     "vnu-jar": "^17.9.0"
