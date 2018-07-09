@@ -7,7 +7,7 @@
   <meta name="description" content="{{ if isset .Params "description" }}{{ .Params.description }}{{else}}{{ .Summary }}{{ end }}" />
   <meta name="author" content="Marvin Pinto" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css" integrity="sha256-CDVQJfU+jJGU/oyDzvnzuGXbv0rz+SyBsPQwyn7x/jQ=" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary" />
@@ -139,13 +139,13 @@
 
       <a class="navbar-item is-hidden-desktop" href="https://github.com/marvinpinto/ledger-reconciler" target="_blank">
         <span class="icon" style="color: #333;">
-          <i class="fa fa-github"></i>
+          <i class="fab fa-github"></i>
         </span>
       </a>
 
       <a class="navbar-item is-hidden-desktop" href="https://twitter.com/marvinpinto" target="_blank">
         <span class="icon" style="color: #55acee;">
-          <i class="fa fa-twitter"></i>
+          <i class="fab fa-twitter"></i>
         </span>
       </a>
 
@@ -164,16 +164,19 @@
           <a class="navbar-link" href="#">Plugins</a>
           <div class="navbar-dropdown">
             <a class="navbar-item" href="{{ relref . "/plugins/amex.md" }}">
-              <span class="icon"><i class="fa fa-credit-card" aria-hidden="true"></i></span>&nbsp;American Express
+              <span class="icon"><i class="fab fa-cc-amex" aria-hidden="true"></i></span>&nbsp;American Express
             </a>
             <a class="navbar-item" href="{{ relref . "/plugins/chase-canada.md" }}">
-              <span class="icon"><i class="fa fa-credit-card" aria-hidden="true"></i></span>&nbsp;Chase Canada
+              <span class="icon"><i class="fab fa-cc-visa" aria-hidden="true"></i></span>&nbsp;Chase Canada
             </a>
             <a class="navbar-item" href="{{ relref . "/plugins/pc-mastercard.md" }}">
-              <span class="icon"><i class="fa fa-credit-card" aria-hidden="true"></i></span>&nbsp;PC Financial Mastercard
+              <span class="icon"><i class="fab fa-cc-mastercard" aria-hidden="true"></i></span>&nbsp;PC Financial Mastercard
             </a>
             <a class="navbar-item" href="{{ relref . "/plugins/tangerine-bank.md" }}">
-              <span class="icon"><i class="fa fa-university" aria-hidden="true"></i></span>&nbsp;Tangerine Bank
+              <span class="icon"><i class="fas fa-university" aria-hidden="true"></i></span>&nbsp;Tangerine Bank
+            </a>
+            <a class="navbar-item" href="{{ relref . "/plugins/prestocard.md" }}">
+              <span class="icon"><i class="fas fa-subway" aria-hidden="true"></i></span>&nbsp;Prestocard
             </a>
           </div>
         </div>
@@ -184,12 +187,12 @@
       <div class="navbar-end">
         <a class="navbar-item is-hidden-desktop-only" href="https://twitter.com/marvinpinto" target="_blank">
           <span class="icon" style="color: #55acee;">
-            <i class="fa fa-twitter"></i>
+            <i class="fab fa-twitter"></i>
           </span>
         </a>
         <a class="navbar-item is-hidden-desktop-only" href="https://github.com/marvinpinto/ledger-reconciler" target="_blank">
           <span class="icon" style="color: #333;">
-            <i class="fa fa-github"></i>
+            <i class="fab fa-github"></i>
           </span>
         </a>
         <div class="navbar-item">
@@ -202,7 +205,7 @@
               target="_blank"
               href="{{ "https://twitter.com/intent/tweet?text=Ledger Reconciler: Automatically download and reconcile your ledger financial entries&hashtags=ledgercli&url=https://disjoint.ca/projects/ledger-reconciler&via=marvinpinto" | safeURL }}">
               <span class="icon">
-                <i class="fa fa-twitter"></i>
+                <i class="fab fa-twitter"></i>
               </span>
               <span>Tweet</span>
             </a>
