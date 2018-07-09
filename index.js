@@ -83,6 +83,7 @@ const main = async () => {
         csvInputFileName: tempFile.path,
         reckonTokensTempFileName: tempYamlFile.path,
         logger,
+        inverseTransactions: plugin.inverseTransactions,
       });
     }
 
