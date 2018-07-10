@@ -3,6 +3,7 @@ title: 'Ledger Reconciler'
 subtitle: 'Automatically download and reconcile your ledger financial entries'
 description: 'Automatically download and reconcile your ledger financial entries'
 date: '2017-09-06'
+lastmod: '2019-07-09'
 ---
 
 <h2 class="content-subhead">Supported financial institutions</h2>
@@ -13,6 +14,7 @@ Ledger Reconciler currently supports the following financial institutions:
 - [Chase Canada][chase-canada-plugin]
 - [PC Financial Mastercard][pc-mastercard-plugin]
 - [Tangerine Bank][tangerine-plugin]
+- [Prestocard][prestocard-plugin]
 
 
 <h2 class="content-subhead">Don't see your financial institution?</h2>
@@ -28,3 +30,4 @@ issue][ledger-reconciler-issues].
 [pc-mastercard-plugin]: {{< relref "/plugins/pc-mastercard.md" >}}
 [amex-plugin]: {{< relref "/plugins/amex.md" >}}
 [tangerine-plugin]: {{< relref "/plugins/tangerine-bank.md" >}}
+[prestocard-plugin]: {{< relref "/plugins/prestocard.md" >}}
