@@ -49,7 +49,21 @@ const main = async () => {
   const browser = await puppeteer.launch({
     args: decrConfig.chromiumHeadlessArgs,
     dumpio: false, // useful for debugging
+    defaultViewport: {
+      width: 1940,
+      height: 1280,
+      isLandscape: true,
+    },
   });
+
+  // const browser = await puppeteer.connect({
+  //   browserWSEndpoint: 'ws://172.17.0.1:5656/devtools/browser/<id>',
+  //   defaultViewport: {
+  //     width: 1940,
+  //     height: 1280,
+  //     isLandscape: true,
+  //   },
+  // });
 
   // Write out the reckon token data to a temp file
   const tempYamlFile = temp.openSync();
