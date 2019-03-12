@@ -98,8 +98,8 @@ As an example, let's assume we have the following values in the config file and
 we wish to encrypt the `password` value:
 ``` yaml
 plugins:
-  - name: 'PC Mastercard'
-    location: './lib/plugins/PCMastercardPlugin'
+  - name: 'Tangerine Bank'
+    location: './lib/plugins/TangerineBankingPlugin'
     username: 'donald_duck'
     password: 'shhsekret'
 ```
@@ -113,14 +113,14 @@ LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tClZlcnNpb246IEdudVBHIHYyLjAuMjIgKEdOVS9MaW51
 Copy the encrypted string and add it back to the config file:
 ``` yaml
 plugins:
-  - name: 'PC Mastercard'
-    location: './lib/plugins/PCMastercardPlugin'
+  - name: 'Tangerine Bank'
+    location: './lib/plugins/TangerineBankingPlugin'
     username: 'donald_duck'
     password: 'ENCRYPTED:LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tClZlcnNpb246IEdudVBHIHYyLjAuMjIgKEdOVS9MaW51eCkKQ29tbWVudDogR1BHVG9vbHMgLSBodHRwczovL2dwZ3Rvb2xzLm9yZwoKaFFFTUErWWhkMW5jNHRSNEFRZjhDa3dxNURCRXdPYTFQMFVnTDlIMlc1aXhPc2NRUEtGU04vVnNSWmwxN0RVeApmVjQwSXVKalZscERLSUtxVSsvSFY0RmhmZWN6SjR6dkZoRUZzT2loc1czL3RFTDJhUHpOMjQzMWFnb1NPUlRpCkhZR284YUJPV2dnMmV6c055Skl0SXRnQ3lSdVQxRnN0NWF3dU9pMHlpM2g0b2NVQnhaUzQ1T285azloeDR6WHgKVFUrbDlPZXhXS1lvM01UclFEWWpwYTRoaWZzajA3SUVWc3lFKzNPV3RsUVVkdi96bWVMYWUzR1VIUEc0eno0Zgp5N1NMdGh5ZkFncDgzcjdkOXUvMWdCVk0ybFRkNlFINkVreTM0RkVxMDZkVDljdXcxN2FXaTdqK3hrdlVzU0VVCjBEM3ZaOUplVnc2dlNPTTJMNXpMZkhNRC9KUW5URW51RTM0TTR2b3hUZEpGQWNydzMrZWs5dldPTUFXaFR1Tm0KVzMxS01jR05mWHpxNFEyaFhxT3hKdFVnZEFHUkRqN3pPK1Znbm9reTNWUjZCRytoRTIxb1BuZGVZZ1B1TlNsdApZTVJYVDJ6awo9VGx1cwotLS0tLUVORCBQR1AgTUVTU0FHRS0tLS0tCg=='
 ```
 
 Ledger Reconciler will now do the right thing and use the decrypted `shhsekret`
-value as needed when processing the `PC Mastercard` plugin!
+value as needed when processing the `Tangerine Banking` plugin!
 
 **Important:** Do not encrypt your secret values for key `52654E6EB0BB564B` -
 this is [my key][marvin-gpg-pub-key] that I used here as an example. You can
