@@ -28,7 +28,7 @@ yarn install
 Be sure to use the `--debug` and `--dry-run` flags when testing and iterating
 on your program locally.
 ``` bash
-node index.js --debug --dry-run
+yarn run dev:dry-run
 ```
 
 Before submitting a [pull request][ledger-reconciler-pr], do make sure all the

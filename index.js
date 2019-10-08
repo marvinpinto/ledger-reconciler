@@ -3,7 +3,6 @@
 const util = require('util');
 const program = require('commander');
 const Logger = require('./lib/Logger');
-const puppeteer = require('puppeteer');
 const toCSV = require('./lib/toCSV');
 const toLedger = require('./lib/toLedger');
 const temp = require('temp').track();
@@ -14,6 +13,13 @@ const ledgerBalanceReport = require('./lib/ledgerBalanceReport');
 const jsYaml = require('js-yaml');
 const parseConfiguration = require('./lib/parseConfiguration');
 
+// Initialize puppeteer with a few stealthy plugins
+const puppeteer = require("puppeteer-extra")
+const StealthPlugin = require("puppeteer-extra-plugin-stealth")
+puppeteer.use(StealthPlugin())
+const UserAgentPlugin = require("puppeteer-extra-plugin-anonymize-ua")
+puppeteer.use(UserAgentPlugin({makeWindows: true}))
+
 program
   .version('0.3.0')
   .option('-c, --config <config file>', 'Ledger Reconciler config file')
@@ -23,7 +29,7 @@ program
   .parse(process.argv);
 
 process.on('unhandledRejection', (err) => {
-  logger.error(err);
+  logger.error(JSON.stringify(err));
   logger.error(err.stack);
   process.exit(1);
 });
@@ -46,9 +52,19 @@ const main = async () => {
     process.exit(0);
   }
 
-  const browser = await puppeteer.launch({
-    args: decrConfig.chromiumHeadlessArgs,
+  const puppeteerOpts = {
     dumpio: false, // useful for debugging
+    defaultViewport: {
+      width: 1280,
+      height: 1024,
+    },
+  };
+
+  const browser = await puppeteer.launch({
+    args: [
+      ...decrConfig.chromiumHeadlessArgs,
+    ],
+    ...puppeteerOpts,
   });
 
   // Write out the reckon token data to a temp file
