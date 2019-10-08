@@ -67,6 +67,11 @@ const main = async () => {
     ...puppeteerOpts,
   });
 
+  // const browser = await puppeteer.connect({
+  //   browserWSEndpoint: 'ws://<IP>:<PORT>/devtools/browser/<UUID>',
+  //   ...puppeteerOpts,
+  // });
+
   // Write out the reckon token data to a temp file
   const tempYamlFile = temp.openSync();
   await writeYaml(tempYamlFile.path, decrConfig.reckonTokens);
