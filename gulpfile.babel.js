@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-const {exec, spawn} = require('child-process-promise');
+const {spawn} = require('child-process-promise');
 const colors = require('ansi-colors');
 const log = require('fancy-log');
 const source = require('vinyl-source-stream');
@@ -26,7 +26,7 @@ const files = {
 
 const printOutput = (tag, output) => {
   if (output.stdout) {
-    output.stdout.split('\n').forEach((line) => {
+    output.stdout.split('\n').forEach(line => {
       const tline = line.trim();
       if (tline) {
         log(colors.magenta(`${tag}: ${tline}`));
@@ -35,7 +35,7 @@ const printOutput = (tag, output) => {
   }
 
   if (output.stderr) {
-    output.stderr.split('\n').forEach((line) => {
+    output.stderr.split('\n').forEach(line => {
       const tline = line.trim();
       if (tline) {
         log(colors.red(`${tag}: ${tline}`));
@@ -44,13 +44,10 @@ const printOutput = (tag, output) => {
   }
 };
 
-const executeAsyncProcess = async (args) => {
+const executeAsyncProcess = async args => {
   let isStderrOutputPresent = false;
 
-  if (!args.process ||
-      !args.taskTag ||
-      !args.processArguments ||
-      args.envVars === undefined) {
+  if (!args.process || !args.taskTag || !args.processArguments || args.envVars === undefined) {
     throw new Error('Invalid arguments passed into "executeAsyncProcess"');
   }
 
@@ -62,10 +59,10 @@ const executeAsyncProcess = async (args) => {
   const overriddenEnv = Object.assign({}, process.env, args.envVars);
   const promise = spawn(args.process, args.processArguments, {env: overriddenEnv});
   const childProcess = promise.childProcess;
-  childProcess.stdout.on('data', (data) => {
+  childProcess.stdout.on('data', data => {
     printOutput(args.taskTag, {stdout: data.toString(), stderr: ''});
   });
-  childProcess.stderr.on('data', (data) => {
+  childProcess.stderr.on('data', data => {
     isStderrOutputPresent = true;
     printOutput(args.taskTag, {stdout: '', stderr: data.toString()});
   });
@@ -79,12 +76,7 @@ const executeAsyncProcess = async (args) => {
 };
 
 export const lintJavascript = () => {
-  const jsfiles = [
-    'gulpfile.babel.js',
-    'index.js',
-    'lib/**/*.js',
-    'tests/**/*.js',
-  ];
+  const jsfiles = ['gulpfile.babel.js', 'index.js', 'lib/**/*.js', 'tests/**/*.js'];
 
   return executeAsyncProcess({
     process: 'yarn',
@@ -109,10 +101,14 @@ const websiteDevServer = () => {
     process: hugoBinary,
     processArguments: [
       'server',
-      '--baseUrl', `http://${ip.address()}:1313`,
-      '--source', 'website',
-      '--config', 'website/config.yaml',
-      '--bind', ip.address(),
+      '--baseUrl',
+      `http://${ip.address()}:1313`,
+      '--source',
+      'website',
+      '--config',
+      'website/config.yaml',
+      '--bind',
+      ip.address(),
     ],
     taskTag: 'websiteDevServer',
     envVars: {},
@@ -123,13 +119,7 @@ export const startWebsiteDevServer = gulp.series(downloadHugo, websiteDevServer)
 const validateHtml5Content = () => {
   return executeAsyncProcess({
     process: 'java',
-    processArguments: [
-      '-jar', vnuJar,
-      '--skip-non-html',
-      '--errors-only',
-      '--exit-zero-always',
-      'dist/website/',
-    ],
+    processArguments: ['-jar', vnuJar, '--skip-non-html', '--errors-only', '--exit-zero-always', 'dist/website/'],
     taskTag: 'validateHtml5Content',
     envVars: {},
     failOnStderr: true,
@@ -140,10 +130,14 @@ const generateProductionHugoWebsite = () => {
   return executeAsyncProcess({
     process: hugoBinary,
     processArguments: [
-      '--baseURL', 'https://disjoint.ca/projects/ledger-reconciler',
-      '--source', 'website',
-      '--config', 'website/config.yaml',
-      '--destination', '../dist/website',
+      '--baseURL',
+      'https://disjoint.ca/projects/ledger-reconciler',
+      '--source',
+      'website',
+      '--config',
+      'website/config.yaml',
+      '--destination',
+      '../dist/website',
       '--cleanDestinationDir',
     ],
     taskTag: 'generateProductionHugoWebsite',
@@ -159,8 +153,10 @@ const htmlProofer = () => {
       '--report-script-embeds',
       '--check-html',
       '--only-4xx',
-      '--url-swap', '"https...disjoint.ca/projects/ledger-reconciler:"',
-      '--url-ignore', '"/global.americanexpress.com/"',
+      '--url-swap',
+      '"https...disjoint.ca/projects/ledger-reconciler:"',
+      '--url-ignore',
+      '"/global.americanexpress.com/"',
       './dist/website',
     ],
     taskTag: 'htmlProofer',
@@ -169,13 +165,18 @@ const htmlProofer = () => {
 };
 
 const analyzeHtmlContent = () => {
-  return gulp.src(files.html)
+  return gulp
+    .src(files.html)
     .pipe(htmlhint('.htmlhintrc'))
     .pipe(htmlhint.reporter('htmlhint-stylish'))
     .pipe(htmlhint.failReporter({suppress: true}));
 };
 
-export const websiteTests = gulp.series(downloadHugo, generateProductionHugoWebsite, gulp.parallel(analyzeHtmlContent, validateHtml5Content, htmlProofer));
+export const websiteTests = gulp.series(
+  downloadHugo,
+  generateProductionHugoWebsite,
+  gulp.parallel(analyzeHtmlContent, validateHtml5Content, htmlProofer),
+);
 
 const deployWebsiteTask = () => {
   const publisher = awspublish.create({
@@ -193,29 +194,30 @@ const deployWebsiteTask = () => {
     'Cache-Control': 'max-age=7200', // 2 hours
   };
 
-  return gulp.src(['dist/website/**'])
-    .pipe(rename((path) => {
-      // Purpose is to deploy the website files into the
-      // '/projects/ledger-reconciler' subdirectory within the S3 bucket
-      path.dirname = `projects/ledger-reconciler/${path.dirname}`;
-    }))
+  return gulp
+    .src(['dist/website/**'])
+    .pipe(
+      rename(path => {
+        // Purpose is to deploy the website files into the
+        // '/projects/ledger-reconciler' subdirectory within the S3 bucket
+        path.dirname = `projects/ledger-reconciler/${path.dirname}`;
+      }),
+    )
     .pipe(publisher.publish(headers))
     .pipe(publisher.sync('projects/ledger-reconciler'))
     .pipe(cloudfront(cfSettings))
-    .pipe(awspublish.reporter({
-      states: ['create', 'update', 'delete'],
-    }));
+    .pipe(
+      awspublish.reporter({
+        states: ['create', 'update', 'delete'],
+      }),
+    );
 };
 export const deployWebsite = gulp.series(downloadHugo, generateProductionHugoWebsite, deployWebsiteTask);
 
 export const submitSitemaps = async () => {
-  const tag = 'submit-sitemaps';
-  const urls = [
-    'https://www.google.com/ping',
-    'https://www.bing.com/ping',
-  ];
+  const urls = ['https://www.google.com/ping', 'https://www.bing.com/ping'];
 
-  const promises = urls.map((ele) => {
+  const promises = urls.map(ele => {
     return axios.request({
       method: 'get',
       url: ele,

@@ -71,13 +71,12 @@ describe('toCSV function', () => {
         date: 1504271594569,
         amount: '$1,500.99',
         merchant: '"amazon.com"',
-        comments: [
-          'comment1: This is comment 1',
-          'comment2: This is comment 2',
-        ],
+        comments: ['comment1: This is comment 1', 'comment2: This is comment 2'],
       },
     ];
 
-    expect(toCSV(inputArgs)).toEqual('09/01/2017,$1500.99,"amazon.com",comment1: This is comment 1,comment2: This is comment 2\r\n');
+    expect(toCSV(inputArgs)).toEqual(
+      '09/01/2017,$1500.99,"amazon.com",comment1: This is comment 1,comment2: This is comment 2\r\n',
+    );
   });
 });

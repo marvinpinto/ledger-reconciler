@@ -14,11 +14,11 @@ const jsYaml = require('js-yaml');
 const parseConfiguration = require('./lib/parseConfiguration');
 
 // Initialize puppeteer with a few stealthy plugins
-const puppeteer = require("puppeteer-extra")
-const StealthPlugin = require("puppeteer-extra-plugin-stealth")
-puppeteer.use(StealthPlugin())
-const UserAgentPlugin = require("puppeteer-extra-plugin-anonymize-ua")
-puppeteer.use(UserAgentPlugin({makeWindows: true}))
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+puppeteer.use(StealthPlugin());
+const UserAgentPlugin = require('puppeteer-extra-plugin-anonymize-ua');
+puppeteer.use(UserAgentPlugin({makeWindows: true}));
 
 program
   .version('0.3.0')
@@ -28,7 +28,7 @@ program
   .option('--dry-run', 'Perform a dry run - scrape transactions for all plugins but do not update anything')
   .parse(process.argv);
 
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', err => {
   logger.error(JSON.stringify(err));
   logger.error(err.stack);
   process.exit(1);
@@ -61,9 +61,7 @@ const main = async () => {
   };
 
   const browser = await puppeteer.launch({
-    args: [
-      ...decrConfig.chromiumHeadlessArgs,
-    ],
+    args: [...decrConfig.chromiumHeadlessArgs],
     ...puppeteerOpts,
   });
 

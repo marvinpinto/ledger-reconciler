@@ -11,7 +11,9 @@ describe('BasePlugin base class', () => {
   });
 
   it('clarifies that the scrapeTransactions function should be implemented in the extending class', async () => {
-    await expect(basePlugin.scrapeTransactions()).rejects.toEqual(Error('This should be implemented in the extended class'));
+    await expect(basePlugin.scrapeTransactions()).rejects.toEqual(
+      Error('This should be implemented in the extended class'),
+    );
   });
 
   it('clarifies that the getMostRecentTransactionDate function should be implemented in the extending class', () => {

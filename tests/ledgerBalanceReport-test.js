@@ -1,9 +1,9 @@
 const ledgerBalanceReport = require('../lib/ledgerBalanceReport');
 
 jest.mock('util', () => ({
-  promisify: () => ((filename, args) => {
+  promisify: () => (filename, args) => {
     expect(filename).toEqual('/usr/local/bin/ledger');
-    expect(args.length).toEqual(7);
+    expect(args).toHaveLength(7);
     expect(args[0]).toEqual('--date-format');
     expect(args[1]).toEqual('%Y-%m-%d');
     expect(args[2]).toEqual('-f');
@@ -16,7 +16,7 @@ jest.mock('util', () => ({
       stdout: 'fake stdout output',
       stderr: 'fake stderr output',
     });
-  }),
+  },
 }));
 
 describe('ledgerBalanceReport function', () => {
@@ -36,7 +36,9 @@ describe('ledgerBalanceReport function', () => {
       logger,
     };
 
-    await expect(ledgerBalanceReport(inputArgs)).rejects.toEqual(Error('Missing ledger file name - this is very likely a bug'));
+    await expect(ledgerBalanceReport(inputArgs)).rejects.toEqual(
+      Error('Missing ledger file name - this is very likely a bug'),
+    );
   });
 
   it('throws an error if the ledger cli path is not specified', async () => {
@@ -48,7 +50,9 @@ describe('ledgerBalanceReport function', () => {
       logger,
     };
 
-    await expect(ledgerBalanceReport(inputArgs)).rejects.toEqual(Error('You do not appear to have the "ledgerCli" key set in your config file.'));
+    await expect(ledgerBalanceReport(inputArgs)).rejects.toEqual(
+      Error('You do not appear to have the "ledgerCli" key set in your config file.'),
+    );
   });
 
   it('calls ledger with the correct arguments', async () => {
