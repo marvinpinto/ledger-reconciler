@@ -1221,9 +1221,9 @@ atob@^2.1.1:
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
 aws-sdk@^2.1.16, aws-sdk@^2.389.0:
-  version "2.545.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.545.0.tgz#98c50ddfc806376a18cf72f4d4c3d2fdfe25046d"
-  integrity sha512-oQjpvvTkh2a7CvWhSUcFQWkpfkM3wVpzvLgGMInoZ6QIOsuQ+oNKz+zq48yQ619/GP8XnOh0zBQJLcYaa3XAKw==
+  version "2.546.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.546.0.tgz#48bf5fa56ce880973467452427024e77336d6098"
+  integrity sha512-SA+vL10oz8fwH0zicFqTthVEotjg7eGcP2lB/C6DOcNM/P/NMJpXEuR3Dt5eQmuNtjJBZ6kOIOrpq3IglzMmuQ==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -2767,6 +2767,15 @@ fs-exists-sync@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz#982d6893af918e72d08dec9e8673ff2b5a8d6add"
   integrity sha1-mC1ok6+RjnLQjeyehnP/K1qNat0=
+
+fs-extra@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-6.0.1.tgz#8abc128f7946e310135ddc93b98bddb410e7a34b"
+  integrity sha512-GnyIkKhhzXZUWFCaJzvyDLEEgDkPfb4/TPvJCJVuS8MWZgoSsErf++QpiAlDnKFcqhRlm+tIOcencCjyJE6ZCA==
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
 
 fs-extra@^8.1.0:
   version "8.1.0"
@@ -5315,6 +5324,23 @@ puppeteer-extra-plugin-stealth@^2.2.2:
     debug "^3.1.0"
     puppeteer-extra-plugin "^3.0.4"
     puppeteer-extra-plugin-anonymize-ua "^2.1.4"
+
+puppeteer-extra-plugin-user-data-dir@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-data-dir/-/puppeteer-extra-plugin-user-data-dir-2.1.2.tgz#36b19a948c13295708e9d3c9142082b4908b11b5"
+  integrity sha512-aQ00QsWcp8he3wAMiHr+6q10todQ5o0kt2tPj3u3yh/vEwXaMto5Htr97tDqEDmZHqGbR+ZXQsSCKjTqjtJ5tA==
+  dependencies:
+    debug "^3.1.0"
+    fs-extra "^6.0.1"
+    puppeteer-extra-plugin "^2.1.1"
+
+puppeteer-extra-plugin@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin/-/puppeteer-extra-plugin-2.1.1.tgz#9b2b3ef745f3fcf1365bffdff0560330dec54810"
+  integrity sha512-p+5X7WA0LdT6mONyD9DjRHP/1R4VkX2tYEpJr9RyXtsr35PzcE5E35NmrUhy39w9wWT5kfNnCqsLeZ2Vd85H1w==
+  dependencies:
+    debug "^3.1.0"
+    merge-deep "^3.0.1"
 
 puppeteer-extra-plugin@^3.0.4:
   version "3.0.4"

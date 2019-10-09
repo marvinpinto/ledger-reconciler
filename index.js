@@ -19,6 +19,8 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
 const UserAgentPlugin = require('puppeteer-extra-plugin-anonymize-ua');
 puppeteer.use(UserAgentPlugin({makeWindows: true}));
+const UserDataDirPlugin = require('puppeteer-extra-plugin-user-data-dir');
+puppeteer.use(UserDataDirPlugin());
 
 program
   .version('0.3.0')
@@ -61,7 +63,7 @@ const main = async () => {
   };
 
   const browser = await puppeteer.launch({
-    args: [...decrConfig.chromiumHeadlessArgs],
+    args: [...decrConfig.chromiumHeadlessArgs, '--lang=en-CA', '--disable-webgl'],
     ...puppeteerOpts,
   });
 
