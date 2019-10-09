@@ -1,7 +1,8 @@
 const gulp = require('gulp');
-const gutil = require('gulp-util');
 const {exec, spawn} = require('child-process-promise'); // eslint-disable-line no-unused-vars
 const eslint = require('gulp-eslint');
+const colors = require('ansi-colors');
+const log = require('fancy-log');
 const source = require('vinyl-source-stream');
 const streamify = require('gulp-streamify');
 const fs = require('fs');
@@ -28,7 +29,7 @@ const printOutput = (tag, output) => {
     output.stdout.split('\n').forEach((line) => {
       const tline = line.trim();
       if (tline) {
-        gutil.log(gutil.colors.magenta(`${tag}: ${tline}`));
+        log(colors.magenta(`${tag}: ${tline}`));
       }
     });
   }
@@ -37,7 +38,7 @@ const printOutput = (tag, output) => {
     output.stderr.split('\n').forEach((line) => {
       const tline = line.trim();
       if (tline) {
-        gutil.log(gutil.colors.red(`${tag}: ${tline}`));
+        log(colors.red(`${tag}: ${tline}`));
       }
     });
   }
