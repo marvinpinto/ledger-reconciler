@@ -22,17 +22,17 @@
   },
   "scripts": {
     "install": "pip install --user Pygments && gem install --no-document html-proofer",
-    "lint": "gulp lint-javascript",
+    "lint": "gulp lintJavascript",
     "test": "jest --no-watchman --coverage",
-    "all-tests": "yarn test && gulp website-tests",
-    "start": "gulp website-dev-server",
-    "cleanup": "rm -rf coverage node_modules && yarn cache clean",
+    "all-tests": "yarn test && gulp websiteTests",
+    "start": "gulp startWebsiteDevServer",
+    "cleanup": "rm -rf coverage node_modules",
     "preversion": "[ $(git rev-parse --abbrev-ref HEAD) = 'master' ] && yarn run lint && yarn test",
     "preversion:indexjs": "sed -i \"s/[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+/$npm_package_version/g\" index.js",
     "version": "npm run preversion:indexjs && git add index.js",
     "postversion": "git push && git push --tags && yarn run cleanup",
-    "deploy-website": "gulp deploy-website",
-    "submit-sitemaps": "gulp submit-sitemaps",
+    "deploy-website": "gulp deployWebsite",
+    "submit-sitemaps": "gulp submitSitemaps",
     "dev:dry-run": "PATH=bin/:${PATH} node index.js --debug --dry-run",
     "dev:live-run": "PATH=bin/:${PATH} node index.js --debug"
   },
@@ -87,7 +87,10 @@
   },
   "babel": {
     "plugins": [
-      "transform-object-rest-spread"
+      "@babel/plugin-transform-runtime"
+    ],
+    "presets": [
+      "@babel/preset-env"
     ]
   },
   "jest": {
@@ -125,9 +128,13 @@
     "write-yaml": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.3",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "@babel/runtime": "^7.6.3",
     "axios": "^0.19.0",
     "babel-eslint": "^10.0.3",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "child-process-promise": "^2.2.1",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-jest": "^22.17.0",
@@ -144,7 +151,6 @@
     "ip": "^1.1.5",
     "jest": "^21.0.2",
     "mockdate": "^2.0.5",
-    "run-sequence": "^2.2.1",
     "vinyl-source-stream": "^2.0.0",
     "vnu-jar": "^17.9.0"
   }
