@@ -1,6 +1,5 @@
 const gulp = require('gulp');
-const {exec, spawn} = require('child-process-promise'); // eslint-disable-line no-unused-vars
-const eslint = require('gulp-eslint');
+const {exec, spawn} = require('child-process-promise');
 const colors = require('ansi-colors');
 const log = require('fancy-log');
 const source = require('vinyl-source-stream');
@@ -15,6 +14,7 @@ const awspublish = require('gulp-awspublish');
 const rename = require('gulp-rename');
 const cloudfront = require('gulp-cloudfront-invalidate-aws-publish');
 const axios = require('axios');
+const argv = require('minimist')(process.argv.slice(2));
 
 const hugoVersion = '0.26';
 const hugoBinary = 'tmp/hugo';
@@ -79,16 +79,19 @@ const executeAsyncProcess = async (args) => {
 };
 
 export const lintJavascript = () => {
-  const files = [
+  const jsfiles = [
     'gulpfile.babel.js',
     'index.js',
     'lib/**/*.js',
     'tests/**/*.js',
   ];
-  return gulp.src(files)
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+
+  return executeAsyncProcess({
+    process: 'yarn',
+    processArguments: ['eslint', argv.fix ? '--fix' : '', ...jsfiles],
+    taskTag: 'lintJavascript',
+    envVars: {},
+  });
 };
 
 const downloadHugo = () => {
