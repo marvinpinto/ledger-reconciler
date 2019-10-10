@@ -46,6 +46,7 @@ const main = async () => {
   const rawConfiguration = await parseConfiguration(configFileName);
   let encrConfig = rawConfiguration.encrypted;
   let decrConfig = rawConfiguration.decrypted;
+  const maxPluginRetries = 10;
 
   if (!decrConfig.plugins || !decrConfig.plugins.length) {
     logger.warn(`You do not appear to have any plugins listed in your ${configFileName} config file`);
@@ -84,7 +85,24 @@ const main = async () => {
     logger.info(`Now processing plugin: ${plugin.name}`);
     const ReconcilerPlugin = require(plugin.location);
     const inst = new ReconcilerPlugin(browser, logger, {...plugin});
-    const pluginTransactions = await inst.scrapeTransactions();
+
+    let pluginTransactions = null;
+    for (let r = 0; r < maxPluginRetries; r++) {
+      try {
+        pluginTransactions = await inst.scrapeTransactions();
+        break;
+      } catch (error) {
+        logger.info(
+          `Attempt ${r + 1}/${maxPluginRetries} failed for plugin ${plugin.name} (error: ${
+            error.message
+          }). Will try again shortly`,
+        );
+        await inst.randomSleep(500 * r, 3000 * maxPluginRetries);
+      }
+    }
+    if (!pluginTransactions) {
+      throw new Error('Unable to scrape transactions');
+    }
 
     // Write out the CSV output from the plugin into a temp file
     logger.debug(`Raw transaction list: ${JSON.stringify(pluginTransactions)}`);
