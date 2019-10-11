@@ -26,7 +26,9 @@ describe('PrestocardPlugin', () => {
     try {
       prestocardPlugin = new PrestocardPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have the "username" key set in your config file for the Prestocard plugin.'));
+      expect(error).toEqual(
+        Error('You do not appear to have the "username" key set in your config file for the Prestocard plugin.'),
+      );
     }
   });
 
@@ -37,7 +39,9 @@ describe('PrestocardPlugin', () => {
     try {
       prestocardPlugin = new PrestocardPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have the "password" key set in your config file for the Prestocard plugin.'));
+      expect(error).toEqual(
+        Error('You do not appear to have the "password" key set in your config file for the Prestocard plugin.'),
+      );
     }
   });
 

@@ -16,7 +16,11 @@ describe('ChaseCanadaPlugin', () => {
     try {
       chaseCanadaPlugin = new ChaseCanadaPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have either the "username" key set in your config file for the Chase Canada plugin.'));
+      expect(error).toEqual(
+        Error(
+          'You do not appear to have either the "username" key set in your config file for the Chase Canada plugin.',
+        ),
+      );
     }
   });
 
@@ -30,7 +34,11 @@ describe('ChaseCanadaPlugin', () => {
     try {
       chaseCanadaPlugin = new ChaseCanadaPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have either the "password" key set in your config file for the Chase Canada plugin.'));
+      expect(error).toEqual(
+        Error(
+          'You do not appear to have either the "password" key set in your config file for the Chase Canada plugin.',
+        ),
+      );
     }
   });
 
@@ -44,7 +52,11 @@ describe('ChaseCanadaPlugin', () => {
     try {
       chaseCanadaPlugin = new ChaseCanadaPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have either the "securityAnswer" key set in your config file for the Chase Canada plugin.'));
+      expect(error).toEqual(
+        Error(
+          'You do not appear to have either the "securityAnswer" key set in your config file for the Chase Canada plugin.',
+        ),
+      );
     }
   });
 

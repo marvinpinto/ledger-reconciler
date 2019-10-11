@@ -15,7 +15,11 @@ describe('AMEXPlugin', () => {
     try {
       amexPlugin = new AMEXPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have either the "username" key set in your config file for the American Express plugin.'));
+      expect(error).toEqual(
+        Error(
+          'You do not appear to have either the "username" key set in your config file for the American Express plugin.',
+        ),
+      );
     }
   });
 
@@ -28,7 +32,11 @@ describe('AMEXPlugin', () => {
     try {
       amexPlugin = new AMEXPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have either the "password" key set in your config file for the American Express plugin.'));
+      expect(error).toEqual(
+        Error(
+          'You do not appear to have either the "password" key set in your config file for the American Express plugin.',
+        ),
+      );
     }
   });
 

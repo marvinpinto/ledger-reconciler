@@ -3,7 +3,6 @@
 const util = require('util');
 const program = require('commander');
 const Logger = require('./lib/Logger');
-const puppeteer = require('puppeteer');
 const toCSV = require('./lib/toCSV');
 const toLedger = require('./lib/toLedger');
 const temp = require('temp').track();
@@ -14,6 +13,13 @@ const ledgerBalanceReport = require('./lib/ledgerBalanceReport');
 const jsYaml = require('js-yaml');
 const parseConfiguration = require('./lib/parseConfiguration');
 
+// Initialize puppeteer with a few stealthy plugins
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+puppeteer.use(StealthPlugin());
+const UserAgentPlugin = require('puppeteer-extra-plugin-anonymize-ua');
+puppeteer.use(UserAgentPlugin({makeWindows: false}));
+
 program
   .version('0.3.0')
   .option('-c, --config <config file>', 'Ledger Reconciler config file')
@@ -22,8 +28,8 @@ program
   .option('--dry-run', 'Perform a dry run - scrape transactions for all plugins but do not update anything')
   .parse(process.argv);
 
-process.on('unhandledRejection', (err) => {
-  logger.error(err);
+process.on('unhandledRejection', err => {
+  logger.error(JSON.stringify(err));
   logger.error(err.stack);
   process.exit(1);
 });
@@ -40,16 +46,30 @@ const main = async () => {
   const rawConfiguration = await parseConfiguration(configFileName);
   let encrConfig = rawConfiguration.encrypted;
   let decrConfig = rawConfiguration.decrypted;
+  const maxPluginRetries = 10;
 
   if (!decrConfig.plugins || !decrConfig.plugins.length) {
     logger.warn(`You do not appear to have any plugins listed in your ${configFileName} config file`);
     process.exit(0);
   }
 
-  const browser = await puppeteer.launch({
-    args: decrConfig.chromiumHeadlessArgs,
+  const puppeteerOpts = {
     dumpio: false, // useful for debugging
+    defaultViewport: {
+      width: 1280,
+      height: 1024,
+    },
+  };
+
+  const browser = await puppeteer.launch({
+    args: [...decrConfig.chromiumHeadlessArgs, '--disable-web-security'],
+    ...puppeteerOpts,
   });
+
+  // const browser = await puppeteer.connect({
+  //   browserWSEndpoint: 'ws://<IP>:<PORT>/devtools/browser/<UUID>',
+  //   ...puppeteerOpts,
+  // });
 
   // Write out the reckon token data to a temp file
   const tempYamlFile = temp.openSync();
@@ -65,7 +85,24 @@ const main = async () => {
     logger.info(`Now processing plugin: ${plugin.name}`);
     const ReconcilerPlugin = require(plugin.location);
     const inst = new ReconcilerPlugin(browser, logger, {...plugin});
-    const pluginTransactions = await inst.scrapeTransactions();
+
+    let pluginTransactions = null;
+    for (let r = 0; r < maxPluginRetries; r++) {
+      try {
+        pluginTransactions = await inst.scrapeTransactions();
+        break;
+      } catch (error) {
+        logger.info(
+          `Attempt ${r + 1}/${maxPluginRetries} failed for plugin ${plugin.name} (error: ${
+            error.message
+          }). Will try again shortly`,
+        );
+        await inst.randomSleep(500 * r, 3000 * maxPluginRetries);
+      }
+    }
+    if (!pluginTransactions) {
+      throw new Error('Unable to scrape transactions');
+    }
 
     // Write out the CSV output from the plugin into a temp file
     logger.debug(`Raw transaction list: ${JSON.stringify(pluginTransactions)}`);

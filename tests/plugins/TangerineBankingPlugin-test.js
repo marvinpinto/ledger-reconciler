@@ -32,7 +32,9 @@ describe('TangerineBankingPlugin', () => {
     try {
       tangerineBankingPlugin = new TangerineBankingPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have the "username" key set in your config file for the Tangerine Banking plugin.'));
+      expect(error).toEqual(
+        Error('You do not appear to have the "username" key set in your config file for the Tangerine Banking plugin.'),
+      );
     }
   });
 
@@ -43,7 +45,11 @@ describe('TangerineBankingPlugin', () => {
     try {
       tangerineBankingPlugin = new TangerineBankingPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have the "bankingWebsitePin" key set in your config file for the Tangerine Banking plugin.'));
+      expect(error).toEqual(
+        Error(
+          'You do not appear to have the "bankingWebsitePin" key set in your config file for the Tangerine Banking plugin.',
+        ),
+      );
     }
   });
 
@@ -54,7 +60,11 @@ describe('TangerineBankingPlugin', () => {
     try {
       tangerineBankingPlugin = new TangerineBankingPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have the "accountNumber" key set in your config file for the Tangerine Banking plugin.'));
+      expect(error).toEqual(
+        Error(
+          'You do not appear to have the "accountNumber" key set in your config file for the Tangerine Banking plugin.',
+        ),
+      );
     }
   });
 
@@ -65,7 +75,11 @@ describe('TangerineBankingPlugin', () => {
     try {
       tangerineBankingPlugin = new TangerineBankingPlugin(browser, logger, pluginArgs);
     } catch (error) {
-      expect(error).toEqual(Error('You do not appear to have the "securityQuestions" key set in your config file for the Tangerine Banking plugin.'));
+      expect(error).toEqual(
+        Error(
+          'You do not appear to have the "securityQuestions" key set in your config file for the Tangerine Banking plugin.',
+        ),
+      );
     }
   });
 

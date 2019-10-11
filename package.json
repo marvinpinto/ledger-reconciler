@@ -22,25 +22,26 @@
   },
   "scripts": {
     "install": "pip install --user Pygments && gem install --no-document html-proofer",
-    "lint": "gulp lint-javascript",
+    "lint": "gulp lintJavascript",
     "test": "jest --no-watchman --coverage",
-    "all-tests": "yarn test && gulp website-tests",
-    "start": "gulp website-dev-server",
-    "cleanup": "rm -rf coverage node_modules && yarn cache clean",
+    "all-tests": "yarn test && gulp websiteTests",
+    "start": "gulp startWebsiteDevServer",
+    "cleanup": "rm -rf coverage node_modules",
     "preversion": "[ $(git rev-parse --abbrev-ref HEAD) = 'master' ] && yarn run lint && yarn test",
     "preversion:indexjs": "sed -i \"s/[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+/$npm_package_version/g\" index.js",
     "version": "npm run preversion:indexjs && git add index.js",
     "postversion": "git push && git push --tags && yarn run cleanup",
-    "deploy-website": "gulp deploy-website",
-    "submit-sitemaps": "gulp submit-sitemaps",
+    "deploy-website": "gulp deployWebsite",
+    "submit-sitemaps": "gulp submitSitemaps",
     "dev:dry-run": "PATH=bin/:${PATH} node index.js --debug --dry-run",
     "dev:live-run": "PATH=bin/:${PATH} node index.js --debug"
   },
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
-      "google",
-      "plugin:jest/recommended"
+      "plugin:jest/recommended",
+      "plugin:jest/style",
+      "plugin:prettier/recommended"
     ],
     "parser": "babel-eslint",
     "parserOptions": {
@@ -53,9 +54,20 @@
         "as-needed"
       ],
       "max-len": 0,
-      "no-console": 0
+      "no-console": 0,
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": true,
+          "trailingComma": "all",
+          "bracketSpacing": false,
+          "singleQuote": true,
+          "printWidth": 120
+        }
+      ]
     },
     "plugins": [
+      "prettier",
       "jest"
     ],
     "globals": {
@@ -82,12 +94,16 @@
       "caches": true,
       "fetch": true,
       "Response": true,
-      "Headers": true
+      "Headers": true,
+      "URLSearchParams": true
     }
   },
   "babel": {
     "plugins": [
-      "transform-object-rest-spread"
+      "@babel/plugin-transform-runtime"
+    ],
+    "presets": [
+      "@babel/preset-env"
     ]
   },
   "jest": {
@@ -108,41 +124,51 @@
     ]
   },
   "dependencies": {
-    "chalk": "^2.1.0",
-    "commander": "^2.11.0",
-    "fs-extra": "^4.0.1",
+    "chalk": "^2.4.2",
+    "commander": "^3.0.2",
+    "fs-extra": "^8.1.0",
     "gpg": "^0.6.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.15",
     "promise-retry": "^1.1.1",
-    "puppeteer": "^1.4.0",
+    "puppeteer": "^1.20.0",
+    "puppeteer-extra": "^2.1.3",
+    "puppeteer-extra-plugin-anonymize-ua": "^2.1.4",
+    "puppeteer-extra-plugin-stealth": "^2.2.2",
     "read-yaml": "^1.1.0",
-    "request": "^2.87.0",
-    "request-promise-native": "^1.0.5",
-    "temp": "^0.8.3",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
+    "temp": "^0.9.0",
     "write-yaml": "^1.0.0"
   },
   "devDependencies": {
-    "axios": "^0.18.1",
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "@babel/core": "^7.6.3",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "@babel/runtime": "^7.6.3",
+    "ansi-colors": "^4.1.1",
+    "axios": "^0.19.0",
+    "babel-eslint": "^10.0.3",
     "child-process-promise": "^2.2.1",
-    "eslint-config-google": "^0.9.1",
-    "eslint-plugin-jest": "^21.0.2",
-    "gulp": "^3.9.1",
-    "gulp-awspublish": "^3.3.0",
-    "gulp-cloudfront-invalidate-aws-publish": "^0.2.1",
-    "gulp-decompress": "^2.0.1",
-    "gulp-eslint": "^4.0.0",
-    "gulp-htmlhint": "^0.3.1",
-    "gulp-rename": "^1.2.2",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "fancy-log": "^1.3.3",
+    "gulp": "^4.0.2",
+    "gulp-awspublish": "^4.0.0",
+    "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
+    "gulp-decompress": "^3.0.0",
+    "gulp-htmlhint": "^2.2.1",
+    "gulp-rename": "^1.4.0",
     "gulp-streamify": "^1.0.2",
-    "gulp-util": "^3.0.8",
     "htmlhint-stylish": "^1.0.3",
     "ip": "^1.1.5",
-    "jest": "^21.0.2",
-    "mockdate": "^2.0.2",
-    "run-sequence": "^2.1.0",
-    "vinyl-source-stream": "^1.1.0",
-    "vnu-jar": "^17.9.0"
+    "jest": "^24.9.0",
+    "minimist": "^1.2.0",
+    "mockdate": "^2.0.5",
+    "prettier": "^1.18.2",
+    "vinyl-source-stream": "^2.0.0",
+    "vnu-jar": "^19.9.4"
   }
 }
